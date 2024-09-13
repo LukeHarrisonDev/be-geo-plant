@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS geo_plant_test;
+DROP DATABASE IF EXISTS geo_plant;
+
+CREATE DATABASE geo_plant_test;
+CREATE DATABASE geo_plant;
