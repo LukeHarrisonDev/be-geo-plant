@@ -13,7 +13,6 @@ function seed ({typeData}) {
         return db.query(`DROP TABLE IF EXISTS types;`)
     })
     .then(() => {
-        // console.log(typeData, "<<< TD")
         return db.query(
             `CREATE TABLE types (
             type_id SERIAL PRIMARY KEY,
@@ -28,33 +27,11 @@ function seed ({typeData}) {
             plant_name, about_plant
             ) VALUES %L;`,
             typeData.map(({plant_name, about_plant }) => {
-                [plant_name, about_plant]
+                return [plant_name, about_plant]
             })
         )
-        const typePromise =  db.query(insertTypesData)
-
-        typePromise.then((result) => {
-            console.log(result, "<<< RES")
-        })
-
-
-        // .then((result) => {
-        //     console.log(result)
-        //     // return db.query(`SELECT * FROM types;`)
-        //     // .then((result) => {
-        //     //     console.log(result)
-        //     // })
-        // })
+        return db.query(insertTypesData)
     })
-
-
-
-
-
-
-
-
-
 }
 
 module.exports = seed
