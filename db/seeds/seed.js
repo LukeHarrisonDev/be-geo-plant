@@ -1,8 +1,8 @@
 const format = require('pg-format')
 const db = require("../connection")
 
-function seed ({userData}) {
-    return db.query(`DROP TABLE IF EXISTS plantsfound;`)
+function seed ({userData, plantData}) {
+    return db.query(`DROP TABLE IF EXISTS plants_found;`)
     .then(() => {
         return db.query(`DROP TABLE IF EXISTS plants;`)
     })
@@ -10,7 +10,8 @@ function seed ({userData}) {
         return db.query(`DROP TABLE IF EXISTS users;`)
     })
     .then(() => {
-        return db.query(
+
+        const usersTablePromise =  db.query(
             `CREATE TABLE users (
             user_id SERIAL PRIMARY KEY,
             username VARCHAR UNIQUE NOT NULL,
@@ -22,6 +23,17 @@ function seed ({userData}) {
             admin BOOLEAN DEFAULT FALSE
             );`
         )
+        const plantTablePromise = db.query(
+            `CREATE TABLE plants (
+            plant_id SERIAL PRIMARY KEY,
+            plant_name VARCHAR(30) UNIQUE NOT NULL,
+            about_plant VARCHAR NOT NULL,
+            plant_image_url VARCHAR DEFAULT 'https://images.unsplash.com/photo-1476209446441-5ad72f223207?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            rarity INT DEFAULT 100,
+            season TEXT[]
+            );`
+        )
+        return Promise.all([usersTablePromise, plantTablePromise])
     })
     .then(() => {
         const insertUsersData = format(
@@ -32,8 +44,30 @@ function seed ({userData}) {
                 return [username, first_name, last_name, email, password, image_url, admin]
             })
         )
-        return db.query(insertUsersData)
+        const usersPromise = db.query(insertUsersData)
+
+        // console.log(userData, "<< USER D")
+        console.log(plantData, "<< PLANT D")
+
+        const insertPlantsData = format(
+            `INSERT INTO plants (
+            plant_name, about_plant, plant_image_url, rarity, season
+            ) VALUES %L;`,
+            plantData.map(({ plant_name, about_plant, plant_image_url, rarity, season }) => {
+                return [plant_name, about_plant, plant_image_url, rarity, season]
+            })
+        )
+        const plantsPromise = db.query(insertPlantsData)
+        return plantsPromise
+
+        // return Promise.all([usersPromise, plantsPromise])
     })
 }
 
 module.exports = seed
+
+
+
+// location_name VARCHAR (30) NOT NULL,
+// location JSONB NOT NULL,
+// found_at TIMESTAMP DEFUALT NOW(),

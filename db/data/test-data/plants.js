@@ -1,70 +1,45 @@
 module.exports = [
     {
-        location_name: "Location One",
-        location: {
-            latitude: 53.7964808712088,
-            longitude: -1.5477046885297452,
-        },
-        plant_type: "Plant Name 1",
+        plant_name: "Plant One",
+        about_plant: "Cillum dolore commodo quis commodo qui. Et laborum quis proident in mollit in velit amet ex anim ea officia velit.",
         plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        planted_by: "UserName£$_1"
+        rarity: 50,
+        season: ["Spring", "Summer", "Autumn", "Winter"],
     },
     {
-        location_name: "Location Two",
-        location: {
-            latitude: 53.79884749002853,
-            longitude: -1.5516932209308096,
-        },
-        plant_type: "Plant Name 1",
+        plant_name: "Plant Two",
+        about_plant: "Ex tempor ullamco est incididunt nostrud duis officia voluptate nisi occaecat laborum excepteur proident. Consectetur dolore ipsum exercitation sunt culpa id cillum aute sint nostrud eu est.",
+        season: ["Spring"],
+    },
+    {
+        plant_name: "Plant Three",
+        about_plant: "Officia amet sint consectetur laboris aliquip officia eiusmod proident aliquip sunt quis adipisicing. Velit exercitation in deserunt reprehenderit culpa.",
         plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        planted_by: "UserName£$_2"
+        rarity: 20,
+        season: ["Spring", "Summer"],
     },
     {
-        location_name: "Location Three",
-        location: {
-            latitude: 53.796926081114016,
-            longitude: -1.542362167167193,
-          },
-        plant_type: "Plant Name 1",
-        planted_by: "UserName£$_1"
-    },
-    {
-        location_name: "Location Four",
-        location: {
-            latitude: 53.76651582094719,
-            longitude: -1.78653743045589,
-        },
-        plant_type: "Plant Name 2",
+        plant_name: "Plant Four",
+        about_plant: "Voluptate aliqua eu voluptate dolore id ipsum ullamco elit sunt irure.",
         plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        planted_by: "UserName£$_2"
+        season: ["Autumn", "Winter"],
     },
     {
-        location_name: "Location Five",
-        location: {
-            latitude: 53.76893440999464, 
-            longitude: -1.774885113236008,
-        },
-        plant_type: "Plant Name 1",
+        plant_name: "Plant Five",
+        about_plant: "Culpa quis pariatur eiusmod pariatur nisi proident exercitation consectetur exercitation. Cupidatat eiusmod velit nostrud esse Lorem aliquip adipisicing id ad. Et cupidatat exercitation incididunt ex culpa mollit velit dolor ad labore pariatur ad id. Et incididunt anim ut in sit reprehenderit non consequat.",
         plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        planted_by: "UserName£$_1"
+        rarity: 0,
+        season: ["Spring", "Summer", "Autumn"],
     },
     {
-        location_name: "Location Six",
-        location: {
-            latitude: 53.77203614247391, 
-            longitude: -1.7675196016755486,
-        },
-        plant_type: "Plant Name 3",
-        planted_by: "UserName£$_1"
+        plant_name: "Plant Six",
+        about_plant: "Velit dolor velit velit Lorem pariatur anim consequat excepteur duis qui laboris non ea aute.",
+        rarity: 100,
+        season: ["Winter"],
     },
     {
-        location_name: "Location Seven",
-        location: {
-            latitude: 53.753130548173694, 
-            longitude: -1.7846145895408105,
-        },
-        plant_type: "Plant Name 3",
-        plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        planted_by: "UserName£$_3"
-    }, 
+        plant_name: "Plant Seven",
+        about_plant: "Ut eu deserunt do anim reprehenderit labore. Deserunt ullamco cillum labore aliquip adipisicing mollit commodo consequat aliqua cillum reprehenderit.",
+        season: ["Spring", "Summer", "Autumn", "Winter"],
+    },
 ]
