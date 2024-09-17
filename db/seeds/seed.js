@@ -1,7 +1,7 @@
 const format = require('pg-format')
 const db = require("../connection")
 
-function seed ({typeData}) {
+function seed ({userData}) {
     return db.query(`DROP TABLE IF EXISTS plantsfound;`)
     .then(() => {
         return db.query(`DROP TABLE IF EXISTS plants;`)
@@ -10,27 +10,29 @@ function seed ({typeData}) {
         return db.query(`DROP TABLE IF EXISTS users;`)
     })
     .then(() => {
-        return db.query(`DROP TABLE IF EXISTS types;`)
-    })
-    .then(() => {
         return db.query(
-            `CREATE TABLE types (
-            type_id SERIAL PRIMARY KEY,
-            plant_name VARCHAR(30) UNIQUE NOT NULL,
-            about_plant VARCHAR NOT NULL
+            `CREATE TABLE users (
+            user_id SERIAL PRIMARY KEY,
+            username VARCHAR UNIQUE NOT NULL,
+            first_name VARCHAR (30) NOT NULL,
+            last_name VARCHAR (30) NOT NULL,
+            email VARCHAR (60) UNIQUE NOT NULL,
+            password VARCHAR (30) NOT NULL,
+            image_url VARCHAR,
+            admin BOOLEAN DEFAULT FALSE
             );`
         )
     })
     .then(() => {
-        const insertTypesData = format(
-            `INSERT INTO types (
-            plant_name, about_plant
+        const insertUsersData = format(
+            `INSERT INTO users (
+            username, first_name, last_name, email, password, image_url, admin
             ) VALUES %L;`,
-            typeData.map(({plant_name, about_plant }) => {
-                return [plant_name, about_plant]
+            userData.map(({ username, first_name, last_name, email, password, image_url, admin }) => {
+                return [username, first_name, last_name, email, password, image_url, admin]
             })
         )
-        return db.query(insertTypesData)
+        return db.query(insertUsersData)
     })
 }
 
