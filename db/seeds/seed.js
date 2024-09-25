@@ -2,7 +2,7 @@ const format = require('pg-format')
 const db = require("../connection")
 const { convertTimestampToDate } = require('./utils')
 
-function seed ({userData, plantData}) {
+function seed ({userData, plantData, plantsFoundData}) {
     return db.query(`DROP TABLE IF EXISTS plants_found;`)
     .then(() => {
         return db.query(`DROP TABLE IF EXISTS plants;`)
@@ -57,7 +57,15 @@ function seed ({userData, plantData}) {
             username, first_name, last_name, email, password, image_url, admin
             ) VALUES %L;`,
             userData.map(({ username, first_name, last_name, email, password, image_url, admin }) => {
-                return [username, first_name, last_name, email, password, image_url, admin]
+                return [
+                    username,
+                    first_name,
+                    last_name,
+                    email,
+                    password,
+                    image_url,
+                    admin
+                ]
             })
         )
         const usersPromise = db.query(insertUsersData)
@@ -67,7 +75,13 @@ function seed ({userData, plantData}) {
             plant_name, about_plant, plant_image_url, rarity, season
             ) VALUES %L;`,
             plantData.map(({ plant_name, about_plant, plant_image_url, rarity, season }) => {
-                return [plant_name, about_plant, plant_image_url, rarity, `{${season.join(',')}}`]
+                return [
+                    plant_name,
+                    about_plant,
+                    plant_image_url,
+                    rarity,
+                    `{${season.join(',')}}`
+                ]
             })
         )
         const plantsPromise = db.query(insertPlantsData)
@@ -75,6 +89,22 @@ function seed ({userData, plantData}) {
         return Promise.all([usersPromise, plantsPromise])
         .then(() => {
             const formattedPlantsFound = plantsFoundData.map(convertTimestampToDate)
+            const insertPlantsFoundData = format(
+                `INSERT INTO plants_found ( plant_id,
+                found_by, location_name, location, photo_url, comment
+                ) VALUES %L;`,
+                formattedPlantsFound.map(({ plant_id, found_by, location_name, location, photo_url, comment }) => {
+                    return [
+                        plant_id,
+                        found_by,
+                        location_name,
+                        JSON.stringify(location),
+                        photo_url,
+                        comment
+                    ]
+                })
+            )
+            return db.query(insertPlantsFoundData)
         })
     })
 }
