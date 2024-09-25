@@ -1,8 +1,9 @@
 const format = require('pg-format')
 const db = require("../connection")
+const { convertTimestampToDate } = require('./utils')
 
 function seed ({userData, plantData}) {
-    return db.query(`DROP TABLE IF EXISTS finds;`)
+    return db.query(`DROP TABLE IF EXISTS plants_found;`)
     .then(() => {
         return db.query(`DROP TABLE IF EXISTS plants;`)
     })
@@ -37,12 +38,12 @@ function seed ({userData, plantData}) {
     })
     .then(() => {
         return db.query(
-            `CREATE TABLE finds (
+            `CREATE TABLE plants_found (
             find_id SERIAL PRIMARY KEY,
             plant_id INT NOT NULL REFERENCES plants(plant_id),
             plant_name VARCHAR REFERENCES plants(plant_name),
             found_by VARCHAR NOT NULL REFERENCES users(username),
-            photo VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
+            photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
             location_name VARCHAR (50) NOT NULL,
             location JSONB NOT NULL,
             comment VARCHAR (300) DEFAULT 'Found, What a nice Plant',
@@ -73,7 +74,7 @@ function seed ({userData, plantData}) {
 
         return Promise.all([usersPromise, plantsPromise])
         .then(() => {
-            
+            const formattedPlantsFound = plantsFoundData.map(convertTimestampToDate)
         })
     })
 }
