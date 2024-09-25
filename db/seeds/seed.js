@@ -110,9 +110,3 @@ function seed ({userData, plantData, plantsFoundData}) {
 }
 
 module.exports = seed
-
-
-
-// location_name VARCHAR (30) NOT NULL,
-// location JSONB NOT NULL,
-// found_at TIMESTAMP DEFUALT NOW(),
