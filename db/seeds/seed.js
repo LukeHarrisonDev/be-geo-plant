@@ -1,7 +1,8 @@
 const format = require('pg-format')
 const db = require("../connection")
+const { convertTimestampToDate } = require('./utils')
 
-function seed ({userData, plantData}) {
+function seed ({userData, plantData, plantsFoundData}) {
     return db.query(`DROP TABLE IF EXISTS plants_found;`)
     .then(() => {
         return db.query(`DROP TABLE IF EXISTS plants;`)
@@ -36,12 +37,35 @@ function seed ({userData, plantData}) {
         return Promise.all([usersTablePromise, plantTablePromise])
     })
     .then(() => {
+        return db.query(
+            `CREATE TABLE plants_found (
+            find_id SERIAL PRIMARY KEY,
+            plant_id INT NOT NULL REFERENCES plants(plant_id),
+            plant_name VARCHAR REFERENCES plants(plant_name),
+            found_by INT NOT NULL REFERENCES users(user_id),
+            photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
+            location_name VARCHAR (50) NOT NULL,
+            location JSONB NOT NULL,
+            comment VARCHAR (300) DEFAULT 'Found, What a nice Plant',
+            created_at TIMESTAMP DEFAULT NOW()
+            );`
+        )
+    })
+    .then(() => {
         const insertUsersData = format(
             `INSERT INTO users (
             username, first_name, last_name, email, password, image_url, admin
             ) VALUES %L;`,
             userData.map(({ username, first_name, last_name, email, password, image_url, admin }) => {
-                return [username, first_name, last_name, email, password, image_url, admin]
+                return [
+                    username,
+                    first_name,
+                    last_name,
+                    email,
+                    password,
+                    image_url,
+                    admin
+                ]
             })
         )
         const usersPromise = db.query(insertUsersData)
@@ -51,13 +75,37 @@ function seed ({userData, plantData}) {
             plant_name, about_plant, plant_image_url, rarity, season
             ) VALUES %L;`,
             plantData.map(({ plant_name, about_plant, plant_image_url, rarity, season }) => {
-                return [plant_name, about_plant, plant_image_url, rarity, `{${season.join(',')}}`]
+                return [
+                    plant_name,
+                    about_plant,
+                    plant_image_url,
+                    rarity,
+                    `{${season.join(',')}}`
+                ]
             })
         )
         const plantsPromise = db.query(insertPlantsData)
-        return plantsPromise
 
-        // return Promise.all([usersPromise, plantsPromise])
+        return Promise.all([usersPromise, plantsPromise])
+        .then(() => {
+            const formattedPlantsFound = plantsFoundData.map(convertTimestampToDate)
+            const insertPlantsFoundData = format(
+                `INSERT INTO plants_found (plant_id,
+                found_by, location_name, location, photo_url, comment
+                ) VALUES %L;`,
+                formattedPlantsFound.map(({ plant_id, found_by, location_name, location, photo_url, comment }) => {
+                    return [
+                        plant_id,
+                        found_by,
+                        location_name,
+                        JSON.stringify(location),
+                        photo_url,
+                        comment
+                    ]
+                })
+            )
+            return db.query(insertPlantsFoundData)
+        })
     })
 }
 
