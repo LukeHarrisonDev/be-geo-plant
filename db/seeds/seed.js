@@ -70,9 +70,11 @@ function seed ({userData, plantData}) {
             })
         )
         const plantsPromise = db.query(insertPlantsData)
-        return plantsPromise
 
-        // return Promise.all([usersPromise, plantsPromise])
+        return Promise.all([usersPromise, plantsPromise])
+        .then(() => {
+            
+        })
     })
 }
 
