@@ -20,8 +20,8 @@ function seed ({userData, plantData, plantsFoundData}) {
             last_name VARCHAR (30) NOT NULL,
             email VARCHAR (60) UNIQUE NOT NULL,
             password VARCHAR (30) NOT NULL,
-            image_url VARCHAR,
-            admin BOOLEAN DEFAULT FALSE
+            image_url VARCHAR DEFAULT 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            admin BOOLEAN DEFAULT 'false'
             );`
         )
         const plantTablePromise = db.query(
@@ -63,8 +63,8 @@ function seed ({userData, plantData, plantsFoundData}) {
                     last_name,
                     email,
                     password,
-                    image_url,
-                    admin
+                    image_url || 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
+                    admin || false
                 ]
             })
         )
