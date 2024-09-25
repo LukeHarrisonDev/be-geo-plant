@@ -46,15 +46,12 @@ function seed ({userData, plantData}) {
         )
         const usersPromise = db.query(insertUsersData)
 
-        // console.log(userData, "<< USER D")
-        console.log(plantData, "<< PLANT D")
-
         const insertPlantsData = format(
             `INSERT INTO plants (
             plant_name, about_plant, plant_image_url, rarity, season
             ) VALUES %L;`,
             plantData.map(({ plant_name, about_plant, plant_image_url, rarity, season }) => {
-                return [plant_name, about_plant, plant_image_url, rarity, season]
+                return [plant_name, about_plant, plant_image_url, rarity, `{${season.join(',')}}`]
             })
         )
         const plantsPromise = db.query(insertPlantsData)
