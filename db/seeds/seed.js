@@ -90,7 +90,7 @@ function seed ({userData, plantData, plantsFoundData}) {
         .then(() => {
             const formattedPlantsFound = plantsFoundData.map(convertTimestampToDate)
             const insertPlantsFoundData = format(
-                `INSERT INTO plants_found ( plant_id,
+                `INSERT INTO plants_found (plant_id,
                 found_by, location_name, location, photo_url, comment
                 ) VALUES %L;`,
                 formattedPlantsFound.map(({ plant_id, found_by, location_name, location, photo_url, comment }) => {
