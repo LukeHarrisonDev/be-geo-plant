@@ -42,7 +42,7 @@ function seed ({userData, plantData, plantsFoundData}) {
             find_id SERIAL PRIMARY KEY,
             plant_id INT NOT NULL REFERENCES plants(plant_id),
             plant_name VARCHAR REFERENCES plants(plant_name),
-            found_by VARCHAR NOT NULL REFERENCES users(username),
+            found_by INT NOT NULL REFERENCES users(user_id),
             photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
             location_name VARCHAR (50) NOT NULL,
             location JSONB NOT NULL,
