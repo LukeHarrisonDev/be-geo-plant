@@ -2,8 +2,8 @@ const format = require('pg-format')
 const db = require("../connection")
 const { convertTimestampToDate } = require('./utils')
 
-function seed ({userData, plantData, plantsFoundData}) {
-    return db.query(`DROP TABLE IF EXISTS plants_found;`)
+function seed ({userData, plantData, foundPlantsData}) {
+    return db.query(`DROP TABLE IF EXISTS found_plants;`)
     .then(() => {
         return db.query(`DROP TABLE IF EXISTS plants;`)
     })
@@ -38,7 +38,7 @@ function seed ({userData, plantData, plantsFoundData}) {
     })
     .then(() => {
         return db.query(
-            `CREATE TABLE plants_found (
+            `CREATE TABLE found_plants (
             find_id SERIAL PRIMARY KEY,
             plant_id INT NOT NULL REFERENCES plants(plant_id),
             plant_name VARCHAR REFERENCES plants(plant_name),
@@ -88,12 +88,12 @@ function seed ({userData, plantData, plantsFoundData}) {
 
         return Promise.all([usersPromise, plantsPromise])
         .then(() => {
-            const formattedPlantsFound = plantsFoundData.map(convertTimestampToDate)
-            const insertPlantsFoundData = format(
-                `INSERT INTO plants_found (plant_id,
+            const formattedFoundPlants = foundPlantsData.map(convertTimestampToDate)
+            const insertFoundPlantsData = format(
+                `INSERT INTO found_plants (plant_id,
                 found_by, location_name, location, photo_url, comment
                 ) VALUES %L;`,
-                formattedPlantsFound.map(({ plant_id, found_by, location_name, location, photo_url, comment }) => {
+                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_url, comment }) => {
                     return [
                         plant_id,
                         found_by,
@@ -104,7 +104,7 @@ function seed ({userData, plantData, plantsFoundData}) {
                     ]
                 })
             )
-            return db.query(insertPlantsFoundData)
+            return db.query(insertFoundPlantsData)
         })
     })
 }
