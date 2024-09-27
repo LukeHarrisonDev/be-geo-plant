@@ -2,10 +2,30 @@ const app = require("../app")
 const seed = require("../db/seeds/seed")
 const data = require("../db/data/test-data")
 const db = require("../db/connection")
+const endpoints = require("../endpoints.json")
+
 const request = require("supertest")
 
 beforeEach(() => seed(data))
 afterAll(() => db.end())
+
+describe("/api", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and the endpoints.json file with the relevant keys", () => {
+            return request(app)
+            .get("/api")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.endpoints).toEqual(endpoints)
+                for (const endpoint in body.endpoints) {
+                    expect(body.endpoints[endpoint]).toHaveProperty("description")
+                    expect(body.endpoints[endpoint]).toHaveProperty("queries")
+                    expect(body.endpoints[endpoint]).toHaveProperty("exampleResponse")
+                }
+            })
+        })
+    })
+})
 
 describe("/api/users", () => {
     describe("GET", () => {
