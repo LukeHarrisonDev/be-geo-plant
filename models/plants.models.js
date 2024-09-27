@@ -1,11 +1,11 @@
 const db = require("../db/connection")
 
-function fetchUsers() {
-    let sqlQuery = `SELECT * FROM users`
+function fetchPlants() {
+    let sqlQuery = `SELECT * FROM plants`
     return db.query(sqlQuery)
     .then(({ rows }) => {
         return rows
     })
 }
 
-module.exports = { fetchUsers }
+module.exports = { fetchPlants }
