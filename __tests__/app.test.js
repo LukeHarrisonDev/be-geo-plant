@@ -46,7 +46,6 @@ describe("/api/plants", () => {
                         about_plant: expect.any(String),
                         plant_image_url: expect.any(String),
                         rarity: expect.any(Number),
-                        season: expect.any(Array),
                     })
                     expect(Array.isArray(plant.season)).toBe(true)
                 })

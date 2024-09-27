@@ -5,5 +5,6 @@ const app = express()
 
 app.get("/api/users", getUsers)
 app.get("/api/plants", getPlants)
+app.get("/api/found_plants", getFoundPlants)
 
 module.exports = app
