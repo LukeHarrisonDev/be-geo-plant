@@ -1,0 +1,38 @@
+{
+    "GET /api/users": {
+        "description": "serves an array of existing users",
+        "queries": [],
+        "exampleResponse": {
+            "users":
+            [
+                {
+                    "user_id":1,
+                    "username":"UserName£$_1",
+                    "first_name":"Firstone",
+                    "last_name":"Lastone",
+                    "email":"email1@gmail.com",
+                    "password":"Password123!",
+                    "image_url":"https://images.unsplash.com/photo-1521566652839-697aa473761a?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    "admin":false
+                }
+            ]
+        }
+    },
+    "GET /api/plants": {
+        "description": "serves an array of existing plants",
+        "queries": [],
+        "exampleResponse": {
+            "plants":
+            [
+                {
+                    "plant_id":1,
+                    "plant_name":"Plant One",
+                    "about_plant":"Cillum dolore commodo quis commodo qui. Et laborum quis proident in mollit in velit amet ex anim ea officia velit.",
+                    "plant_image_url":"https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    "rarity":50,
+                    "season":["Spring","Summer","Autumn","Winter"]
+                }
+            ]
+        }
+    }
+}

@@ -4,10 +4,10 @@ const data = require("../db/data/test-data")
 const db = require("../db/connection")
 const request = require("supertest")
 
-beforeEach (() => seed(data))
-afterAll (() => db.end())
+beforeEach(() => seed(data))
+afterAll(() => db.end())
 
-describe ("/api/users", () => {
+describe("/api/users", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and an array of all user objects", () => {
             return request(app)
@@ -26,7 +26,30 @@ describe ("/api/users", () => {
                         image_url: expect.any(String),
                     })
                 })
+            })
+        })
+    })
+})
 
+describe("/api/plants", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and an array of all plant objects", () => {
+            return request(app)
+            .get("/api/plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.plants).toHaveLength(7)
+                body.plants.forEach((plant) => {
+                    expect(plant).toMatchObject({
+                        plant_id: expect.any(Number),
+                        plant_name: expect.any(String),
+                        about_plant: expect.any(String),
+                        plant_image_url: expect.any(String),
+                        rarity: expect.any(Number),
+                        season: expect.any(Array),
+                    })
+                    expect(Array.isArray(plant.season)).toBe(true)
+                })
             })
         })
     })
