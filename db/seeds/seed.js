@@ -20,7 +20,7 @@ function seed ({userData, plantData, foundPlantsData}) {
             last_name VARCHAR (30) NOT NULL,
             email VARCHAR (60) UNIQUE NOT NULL,
             password VARCHAR (30) NOT NULL,
-            image_url VARCHAR DEFAULT 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            image_url VARCHAR DEFAULT 'https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             admin BOOLEAN DEFAULT 'false'
             );`
         )
@@ -41,7 +41,6 @@ function seed ({userData, plantData, foundPlantsData}) {
             `CREATE TABLE found_plants (
             find_id SERIAL PRIMARY KEY,
             plant_id INT NOT NULL REFERENCES plants(plant_id),
-            plant_name VARCHAR REFERENCES plants(plant_name),
             found_by INT NOT NULL REFERENCES users(user_id),
             photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
             location_name VARCHAR (50) NOT NULL,
@@ -63,7 +62,7 @@ function seed ({userData, plantData, foundPlantsData}) {
                     last_name,
                     email,
                     password,
-                    image_url || 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
+                    image_url || 'https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                     admin || false
                 ]
             })
@@ -99,8 +98,8 @@ function seed ({userData, plantData, foundPlantsData}) {
                         found_by,
                         location_name,
                         JSON.stringify(location),
-                        photo_url,
-                        comment
+                        photo_url || "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
+                        comment || 'Found, What a nice Plant'
                     ]
                 })
             )

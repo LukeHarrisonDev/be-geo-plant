@@ -1,6 +1,7 @@
 const express = require("express")
 const { getUsers } = require("./controllers/users.controllers")
 const { getPlants } = require("./controllers/plants.controllers")
+const { getFoundPlants } = require("./controllers/found-plants.controller")
 const app = express()
 
 app.get("/api/users", getUsers)
