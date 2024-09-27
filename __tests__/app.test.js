@@ -9,6 +9,19 @@ const request = require("supertest")
 beforeEach(() => seed(data))
 afterAll(() => db.end())
 
+describe("/not-an-endpoint", () => {
+    describe("GET", () => {
+        test("404: Responds with 'Not Found' if the endpoint doesn't exist", () => {
+            return request(app)
+            .get("/not-an-endpoint")
+            .expect(404)
+            .then(({body}) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
+})
+
 describe("/api", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and the endpoints.json file with the relevant keys", () => {
