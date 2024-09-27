@@ -17,5 +17,22 @@
                 }
             ]
         }
+    },
+    "GET /api/plants": {
+        "description": "serves an array of existing plants",
+        "queries": [],
+        "exampleResponse": {
+            "plants":
+            [
+                {
+                    "plant_id":1,
+                    "plant_name":"Plant One",
+                    "about_plant":"Cillum dolore commodo quis commodo qui. Et laborum quis proident in mollit in velit amet ex anim ea officia velit.",
+                    "plant_image_url":"https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    "rarity":50,
+                    "season":["Spring","Summer","Autumn","Winter"]
+                }
+            ]
+        }
     }
 }
