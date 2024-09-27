@@ -14,6 +14,7 @@ describe ("/api/users", () => {
             .get("/api/users")
             .expect(200)
             .then(({body}) => {
+                console.log(JSON.stringify(body))
                 expect(body.users).toHaveLength(4)
                 body.users.forEach((user) => {
                     expect(user).toMatchObject({
@@ -26,7 +27,6 @@ describe ("/api/users", () => {
                         image_url: expect.any(String),
                     })
                 })
-
             })
         })
     })

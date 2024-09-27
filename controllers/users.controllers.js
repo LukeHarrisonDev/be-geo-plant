@@ -5,7 +5,6 @@ function getUsers(request, response, next) {
     .then((users) => {
         response.status(200).send({users})
     })
-    
 }
 
 module.exports = { getUsers }
