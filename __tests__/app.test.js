@@ -64,6 +64,45 @@ describe("/api/users", () => {
     })
 })
 
+describe("/api/users/:user_id", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and a single user object", () => {
+            return request(app)
+            .get("/api/users/2")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.user).toMatchObject({
+                    user_id: 2,
+                    username: "UserName£$_2",
+                    first_name: "Firsttwo",
+                    last_name: "Lasttwo",
+                    email: "email2@gmail.com",
+                    password: "Password234!",
+                    image_url: "https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    admin: false,
+                    plants_count: "7",
+                })
+            })
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the user_id is not a number", () => {
+            return request(app)
+            .get("/api/users/not-a-number")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("404: Responds with a 404 status code and 'Not Found' if the user_id doesn't exist", () => {
+            return request(app)
+            .get("/api/users/999")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
+})
+
 describe("/api/plants", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and an array of all plant objects", () => {
