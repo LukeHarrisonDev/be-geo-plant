@@ -9,6 +9,11 @@ function fetchUsers() {
 }
 
 function fetchUserById(userId) {
+    // console.log(+userId, "<<< User Id")
+    // console.log(typeof +userId, "<<< Type")
+    // if (typeof +userId !== "number") {
+    //     return Promise.reject({ status: 404, message: "Not Found" })
+    // }
     let sqlQuery = `SELECT users.*, COUNT(found_plants.found_by) AS plants_count
     FROM users
     LEFT JOIN found_plants

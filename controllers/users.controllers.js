@@ -16,6 +16,9 @@ function getUserById(request, response, next) {
     .then((user) => {
         response.status(200).send({ user })
     })
+    .catch((error) => {
+        next(error)
+    })
 }
 
 module.exports = { getUsers, getUserById }

@@ -84,6 +84,14 @@ describe("/api/users/:user_id", () => {
                 })
             })
         })
+        test("400: Responds with a 400 status code and 'Bad Request' if the endpoint is not a number", () => {
+            return request(app)
+            .get("/api/users/not-a-number")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
 

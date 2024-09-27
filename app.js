@@ -1,11 +1,13 @@
 const express = require("express")
 const apiRouter = require("./routes/api-router")
-const { catchInvalidEndpoints } = require("./error-handling")
+const { catchInvalidEndpoints, customError, badRequest } = require("./error-handling")
 const app = express()
-const endpoints = require("./endpoints.json")
 
 app.use("/api", apiRouter)
 
+////-= Error Handling =-////
 app.all("/*", catchInvalidEndpoints)
+app.use(badRequest)
+app.use(customError)
 
 module.exports = app
