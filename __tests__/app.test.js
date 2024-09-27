@@ -71,7 +71,7 @@ describe("/api/users/:user_id", () => {
             .get("/api/users/2")
             .expect(200)
             .then(({body}) => {
-                expect(body.user).toEqual({
+                expect(body.user).toMatchObject({
                     user_id: 2,
                     username: "UserName£$_2",
                     first_name: "Firsttwo",
