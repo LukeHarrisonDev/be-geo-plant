@@ -62,6 +62,62 @@ describe("/api/users", () => {
             })
         })
     })
+    describe("POST", () => {
+        test("201: Responds with a 201 status code and the posted user object when the client sends only the required fields", () => {
+            const newUser = {
+                username: "TestUser*%$_1",
+                first_name: "Testfirst",
+                last_name: "Test Last",
+                email: "testemail@gmail.com",
+                password: "PasswordTest123!",
+            }
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(201)
+            .then(({body}) => {
+                expect(body.user).toMatchObject({
+                    user_id: 5,
+                    username: "TestUser*%$_1",
+                    first_name: "Testfirst",
+                    last_name: "Test Last",
+                    email: "testemail@gmail.com",
+                    password: "PasswordTest123!",
+                    image_url: "https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    admin: false,
+                    plants_count: "0",
+                })
+            })
+        })
+        test("201: Responds with the posted user object when the client sends more than the required fields", () => {
+            const newUser = {
+                username: "TestUser*%$_2",
+                first_name: "Testingfirst",
+                last_name: "Testing Last",
+                email: "testingemail@gmail.com",
+                password: "PasswordTest456!",
+                image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                admin: true,
+            }
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(201)
+            .then(({body}) => {
+                expect(body.user).toMatchObject({
+                    user_id: 5,
+                    username: "TestUser*%$_2",
+                    first_name: "Testingfirst",
+                    last_name: "Testing Last",
+                    email: "testingemail@gmail.com",
+                    password: "PasswordTest456!",
+                    image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    admin: true,
+                    plants_count: "0",
+                })
+            })
+        })
+    })
 })
 
 describe("/api/users/:user_id", () => {
