@@ -171,6 +171,14 @@ describe("/api/users/:user_id", () => {
                 expect(body).toEqual({ message: "Bad Request" })
             })
         })
+        test("404: Responds with a 404 status code and 'Not Found' if the user_id doesn't exist", () => {
+            return request(app)
+            .delete("/api/users/999")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
     })
 })
 

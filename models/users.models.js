@@ -47,6 +47,11 @@ function removeUserById(userId) {
     WHERE user_id = $1
     RETURNING *`
     return db.query(sqlQuery, [userId])
+    .then(({ rows }) => {
+        if (rows.length === 0) {
+            return Promise.reject({ status: 404, message: "Not Found" })
+        }
+    })
 }
 
 module.exports = { fetchUsers, fetchUserById, addUser, removeUserById }
