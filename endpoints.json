@@ -1,4 +1,11 @@
 {
+    "GET /api": {
+        "description": "serves a list of possible endpoints",
+        "queries": [],
+        "exampleResponse": {
+            
+        }
+    },
     "GET /api/users": {
         "description": "serves an array of existing users",
         "queries": [],
