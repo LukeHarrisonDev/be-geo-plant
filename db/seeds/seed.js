@@ -41,7 +41,7 @@ function seed ({userData, plantData, foundPlantsData}) {
             `CREATE TABLE found_plants (
             find_id SERIAL PRIMARY KEY,
             plant_id INT NOT NULL REFERENCES plants(plant_id),
-            found_by INT NOT NULL REFERENCES users(user_id),
+            found_by INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
             photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
             location_name VARCHAR (50) NOT NULL,
             location JSONB NOT NULL,
