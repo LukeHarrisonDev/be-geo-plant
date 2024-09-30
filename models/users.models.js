@@ -1,3 +1,4 @@
+const { use } = require("../app")
 const db = require("../db/connection")
 
 function fetchUsers() {
@@ -41,4 +42,11 @@ function fetchUserById(userId) {
     })
 }
 
-module.exports = { fetchUsers, fetchUserById, addUser }
+function removeUserById(userId) {
+    let sqlQuery = `DELETE FROM users
+    WHERE user_id = $1
+    RETURNING *`
+    return db.query(sqlQuery, [userId])
+}
+
+module.exports = { fetchUsers, fetchUserById, addUser, removeUserById }

@@ -157,6 +157,13 @@ describe("/api/users/:user_id", () => {
             })
         })
     })
+    describe("DELETE", () => {
+        test("204: Responds with no content if the given user has been deleted", () => {
+            return request(app)
+            .delete("/api/users/2")
+            .expect(204)
+        })
+    })
 })
 
 describe("/api/plants", () => {
