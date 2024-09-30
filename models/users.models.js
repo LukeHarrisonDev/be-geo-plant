@@ -8,6 +8,24 @@ function fetchUsers() {
     })
 }
 
+function addUser(newUser) {
+    let sqlQuery = `INSERT INTO users (username, first_name, last_name, email, password)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *`
+    const values = [
+        newUser.username,
+        newUser.first_name,
+        newUser.last_name,
+        newUser.email,
+        newUser.password,
+    ]
+    return db.query(sqlQuery, values)
+    .then(({ rows }) => {
+        rows[0].plants_count = "0"
+        return rows[0]
+    })
+}
+
 function fetchUserById(userId) {
     let sqlQuery = `SELECT users.*, COUNT(found_plants.found_by) AS plants_count
     FROM users
@@ -24,4 +42,4 @@ function fetchUserById(userId) {
     })
 }
 
-module.exports = { fetchUsers, fetchUserById }
+module.exports = { fetchUsers, fetchUserById, addUser }
