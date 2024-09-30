@@ -9,16 +9,15 @@ function fetchUsers() {
 }
 
 function addUser(newUser) {
-    let sqlQuery = `INSERT INTO users (username, first_name, last_name, email, password)
-    VALUES ($1, $2, $3, $4, $5)
+    const columns = Object.keys(newUser)
+    const values = Object.values(newUser)
+
+    const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
+
+    let sqlQuery = `INSERT INTO users (${columns})
+    VALUES (${placeholders})
     RETURNING *`
-    const values = [
-        newUser.username,
-        newUser.first_name,
-        newUser.last_name,
-        newUser.email,
-        newUser.password,
-    ]
+    
     return db.query(sqlQuery, values)
     .then(({ rows }) => {
         rows[0].plants_count = "0"
