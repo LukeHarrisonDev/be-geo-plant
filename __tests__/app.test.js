@@ -158,10 +158,18 @@ describe("/api/users/:user_id", () => {
         })
     })
     describe("DELETE", () => {
-        test("204: Responds with no content if the given user has been deleted", () => {
+        test("204: Responds with a 204 status code and no content if the given user has been deleted", () => {
             return request(app)
             .delete("/api/users/2")
             .expect(204)
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the user_id is not a number", () => {
+            return request(app)
+            .delete("/api/users/not-a-number")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
         })
     })
 })
