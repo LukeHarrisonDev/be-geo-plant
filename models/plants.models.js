@@ -8,6 +8,26 @@ function fetchPlants() {
     })
 }
 
+function addPlant(newPlant) {
+    
+    const columns = Object.keys(newPlant)
+    const values = Object.values(newPlant)
+    
+    if (columns.length === 0) {
+        return Promise.reject({ status: 400, message: "Bad Request" })
+    }
+    
+    const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
+    
+    let sqlQuery = `INSERT INTO plants (${columns})
+    VALUES (${placeholders})
+    RETURNING *`
+    return db.query(sqlQuery, values)
+    .then(({ rows }) => {
+        return rows[0]
+    })
+}
+
 function fetchPlantById(plantId) {
     let sqlQuery = `SELECT * FROM plants
     WHERE plant_id = $1`
@@ -20,4 +40,4 @@ function fetchPlantById(plantId) {
     })
 }
 
-module.exports = { fetchPlants, fetchPlantById }
+module.exports = { fetchPlants, fetchPlantById, addPlant }
