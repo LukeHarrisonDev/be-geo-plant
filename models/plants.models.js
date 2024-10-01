@@ -15,7 +15,6 @@ function fetchPlantById(plantId) {
     .then(({ rows }) => {
         return rows[0]
     })
-
 }
 
 module.exports = { fetchPlants, fetchPlantById }
