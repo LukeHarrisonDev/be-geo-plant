@@ -369,7 +369,7 @@ describe("/api/found_plants", () => {
     })
 })
 
-describe("/api/found_plants/:found_plant_id", () => {
+describe("/api/found_plants/:find_id", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and a single found_plant object", () => {
             return request(app)

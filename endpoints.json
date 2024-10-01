@@ -114,7 +114,7 @@
             ]
         }
     },
-    "GET /api/found_plants/:found_plant_id": {
+    "GET /api/found_plants/:find_id": {
         "description": "Serves a found_plant with the given find_id",
         "queries": [],
         "exampleResponse": {
