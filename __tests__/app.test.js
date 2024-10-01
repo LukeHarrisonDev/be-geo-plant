@@ -127,6 +127,24 @@ describe("/api/users", () => {
                 expect(body).toEqual({ message: "Bad Request" })
             })
         })
+        test("400: Responds with 'Bad Request' if the new user has all valid fileds but the datatype is invalid", () => {
+            const newUser = {
+                username: "TestUser*%$_2",
+                first_name: "Testingfirst",
+                last_name: "Testing Last",
+                email: "testingemail@gmail.com",
+                password: "PasswordTest456!",
+                image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                admin: 5,
+            }
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
 
@@ -294,8 +312,24 @@ describe("/api/plants/:plant_id", () => {
                 })
             })
         })
-        test("400: Responds with a 400 status code and 'Bad Request' if the new plant has notiong on the body", () => {
+        test("400: Responds with a 400 status code and 'Bad Request' if the new plant has nothing on the body", () => {
             const newPlant = {}
+            return request(app)
+            .post("/api/plants")
+            .send(newPlant)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("400: Responds with 'Bad Request' if the new plant has all valid fileds but the datatype is invalid", () => {
+            const newPlant = {
+                plant_name: "Plant Eight",
+                about_plant: "Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                rarity: "forty-five",
+                season: ["Summer", "Autumn", "Spring", "Winter"]
+            }
             return request(app)
             .post("/api/plants")
             .send(newPlant)
