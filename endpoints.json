@@ -2,9 +2,7 @@
     "GET /api": {
         "description": "Serves a list of possible endpoints",
         "queries": [],
-        "exampleResponse": {
-            
-        }
+        "exampleResponse": {}
     },
     "GET /api/users": {
         "description": "Serves an array of existing users",
@@ -59,6 +57,11 @@
                 "admin":false
             }
         }
+    },
+    "DELETE /api/users/:user_id": {
+        "description": "Removes the User with the given user_id",
+        "queries": [],
+        "exampleResponse": {}
     },
     "GET /api/plants": {
         "description": "Serves an array of existing plants",
