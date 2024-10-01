@@ -113,5 +113,22 @@
                 }
             ]
         }
+    },
+    "GET /api/found_plants/:find_id": {
+        "description": "Serves a found_plant with the given find_id",
+        "queries": [],
+        "exampleResponse": {
+            "foundPlant":
+            {
+                "find_id":7,
+                "plant_id":2,
+                "found_by":2,
+                "photo_url":"https://images.unsplash.com/photo-1538998073820-4dfa76300194?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "location_name":"Place Seven",
+                "location":{"latitude":51.97567141748108,"longitude":-2.1932002831539124},
+                "comment":"Found, What a nice Plant",
+                "created_at":"2024-10-01T19:58:14.738Z"
+            }
+        }
     }
 }
