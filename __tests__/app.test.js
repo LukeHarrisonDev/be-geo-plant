@@ -230,6 +230,14 @@ describe("/api/plants/:plant_id", () => {
                 expect(body).toEqual({ message: "Bad Request" })
             })
         })
+        test("404: Responds with a 404 status code and 'Not Found' if the plant_id does not exist", () => {
+            return request(app)
+            .get("/api/plants/999")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
     })
 })
 
