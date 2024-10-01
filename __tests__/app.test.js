@@ -388,5 +388,13 @@ describe("/api/found_plants/:found_plant_id", () => {
                 })
             })
         })
+        test("400: Responds with a 400 status code and 'Bad Request' if the find_id is not a number", () => {
+            return request(app)
+            .get("/api/found_plants/not-a-number")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
