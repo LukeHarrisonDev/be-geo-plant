@@ -284,6 +284,16 @@ describe("/api/plants/:plant_id", () => {
                 })
             })
         })
+        test("400: Responds with a 400 status code and 'Bad Request' if the new plant has notiong on the body", () => {
+            const newPlant = {}
+            return request(app)
+            .post("/api/plants")
+            .send(newPlant)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
 
