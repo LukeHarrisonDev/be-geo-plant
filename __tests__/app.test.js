@@ -117,6 +117,34 @@ describe("/api/users", () => {
                 })
             })
         })
+        test("400: Responds with a 400 status code and 'Bad Request' if the new user has nothing on the body", () => {
+            const newUser = {}
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("400: Responds with 'Bad Request' if the new user has all valid fileds but the datatype is invalid", () => {
+            const newUser = {
+                username: "TestUser*%$_2",
+                first_name: "Testingfirst",
+                last_name: "Testing Last",
+                email: "testingemail@gmail.com",
+                password: "PasswordTest456!",
+                image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                admin: 5,
+            }
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
 
@@ -236,6 +264,78 @@ describe("/api/plants/:plant_id", () => {
             .expect(404)
             .then(({ body }) => {
                 expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
+    describe("POST", () => {
+        test("201: Responds with a 201 status code and the posted plant object when the client sends only the required fields", () => {
+            const newPlant = {
+                plant_name: "Plant Eight",
+                about_plant: "Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                season: ["Spring", "Winter"]
+            }
+            return request(app)
+            .post("/api/plants")
+            .send(newPlant)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body.plant).toMatchObject({
+                    plant_id: 8,
+                    plant_name: "Plant Eight",
+                    about_plant: "Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                    plant_image_url: "https://images.unsplash.com/photo-1476209446441-5ad72f223207?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    rarity: 100,
+                    season: ["Spring", "Winter"]
+                })
+            })
+        })
+        test("201: Responds with the posted plant object when the client sends more than the required fields", () => {
+            const newPlant = {
+                plant_name: "Plant Eight",
+                about_plant: "Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                rarity: 78,
+                season: ["Summer", "Autumn", "Spring", "Winter"]
+            }
+            return request(app)
+            .post("/api/plants")
+            .send(newPlant)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body.plant).toMatchObject({
+                    plant_id: 8,
+                    plant_name: "Plant Eight",
+                    about_plant: "Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                    plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    rarity: 78,
+                    season: ["Summer", "Autumn", "Spring", "Winter"]
+                })
+            })
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the new plant has nothing on the body", () => {
+            const newPlant = {}
+            return request(app)
+            .post("/api/plants")
+            .send(newPlant)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("400: Responds with 'Bad Request' if the new plant has all valid fileds but the datatype is invalid", () => {
+            const newPlant = {
+                plant_name: "Plant Eight",
+                about_plant: "Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                rarity: "forty-five",
+                season: ["Summer", "Autumn", "Spring", "Winter"]
+            }
+            return request(app)
+            .post("/api/plants")
+            .send(newPlant)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
             })
         })
     })

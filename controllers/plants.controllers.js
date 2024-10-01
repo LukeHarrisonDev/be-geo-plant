@@ -1,9 +1,20 @@
-const { fetchPlants, fetchPlantById } = require("../models/plants.models")
+const { fetchPlants, fetchPlantById, addPlant } = require("../models/plants.models")
 
 function getPlants(request, response, next) {
     fetchPlants()
     .then((plants) => {
         response.status(200).send({ plants })
+    })
+    .catch((error) => {
+        next(error)
+    })
+}
+
+function postPlant(request, response, next) {
+    const newPlant = request.body
+    addPlant(newPlant)
+    .then((plant) => {
+        response.status(201).send({ plant })
     })
     .catch((error) => {
         next(error)
@@ -21,4 +32,4 @@ function getPlantById(request, response, next) {
     })
 }
 
-module.exports = { getPlants, getPlantById }
+module.exports = { getPlants, getPlantById, postPlant }
