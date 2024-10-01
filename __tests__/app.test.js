@@ -341,7 +341,7 @@ describe("/api/plants/:plant_id", () => {
     })
 })
 
-describe("/api/found_plant", () => {
+describe("/api/found_plants", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and an array of all found_plant objects", () => {
             return request(app)
@@ -363,6 +363,28 @@ describe("/api/found_plant", () => {
                             longitude: expect.any(Number),
                         })
                     })
+                })
+            })
+        })
+    })
+})
+
+describe("/api/found_plants/:found_plant_id", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and a single found_plant object", () => {
+            return request(app)
+            .get("/api/found_plants/7")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlant).toMatchObject({
+                    find_id: 7,
+                    plant_id: 2,
+                    found_by: 2,
+                    location_name: 'Place Seven',
+                    location: {latitude: 51.97567141748108, longitude: -2.1932002831539124},
+                    photo_url: "https://images.unsplash.com/photo-1538998073820-4dfa76300194?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    comment: "Found, What a nice Plant",
+                    created_at: expect.any(String)
                 })
             })
         })

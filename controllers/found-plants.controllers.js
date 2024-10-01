@@ -1,4 +1,4 @@
-const { fetchFoundPlants } = require("../models/found-plants.models")
+const { fetchFoundPlants, fetchFoundPlantById } = require("../models/found-plants.models")
 
 function getFoundPlants(request, response, next) {
     fetchFoundPlants()
@@ -8,6 +8,14 @@ function getFoundPlants(request, response, next) {
     .catch((error) => {
         next(error)
     })
-} 
+}
 
-module.exports = { getFoundPlants }
+function getFoundPlantById(request, response, next) {
+    const found_plant_id = request.params.found_plant_id
+    fetchFoundPlantById(found_plant_id)
+    .then((foundPlant) => {
+        response.status(200).send({ foundPlant })
+    })
+}
+
+module.exports = { getFoundPlants, getFoundPlantById }
