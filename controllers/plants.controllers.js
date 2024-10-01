@@ -16,6 +16,9 @@ function postPlant(request, response, next) {
     .then((plant) => {
         response.status(201).send({ plant })
     })
+    .catch((error) => {
+        next(error)
+    })
 }
 
 function getPlantById(request, response, next) {
