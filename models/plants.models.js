@@ -10,10 +10,13 @@ function fetchPlants() {
 
 function addPlant(newPlant) {
 
+    const columns = Object.keys(newPlant)
     const values = Object.values(newPlant)
 
-    let sqlQuery = `INSERT INTO plants (plant_name, about_plant, season)
-    VALUES ($1, $2, $3)
+    const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
+
+    let sqlQuery = `INSERT INTO plants (${columns})
+    VALUES (${placeholders})
     RETURNING *`
     return db.query(sqlQuery, values)
     .then(({ rows }) => {
