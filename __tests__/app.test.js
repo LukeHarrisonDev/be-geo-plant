@@ -117,6 +117,16 @@ describe("/api/users", () => {
                 })
             })
         })
+        test("400: Responds with a 400 status code and 'Bad Request' if the new user has nothing on the body", () => {
+            const newUser = {}
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
 
