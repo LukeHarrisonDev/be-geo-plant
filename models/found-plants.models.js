@@ -8,10 +8,10 @@ function fetchFoundPlants() {
     })
 }
 
-function fetchFoundPlantById(foundPlantId) {
+function fetchFoundPlantById(findId) {
     let sqlQuery = `SELECT * FROM found_plants
     WHERE find_id = $1`
-    return db.query(sqlQuery, [foundPlantId])
+    return db.query(sqlQuery, [findId])
     .then(({ rows }) => {
         if (rows.length === 0) {
             return Promise.reject({ status: 404, message: "Not Found" })

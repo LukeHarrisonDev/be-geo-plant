@@ -11,8 +11,8 @@ function getFoundPlants(request, response, next) {
 }
 
 function getFoundPlantById(request, response, next) {
-    const found_plant_id = request.params.found_plant_id
-    fetchFoundPlantById(found_plant_id)
+    const find_id = request.params.find_id
+    fetchFoundPlantById(find_id)
     .then((foundPlant) => {
         response.status(200).send({ foundPlant })
     })
