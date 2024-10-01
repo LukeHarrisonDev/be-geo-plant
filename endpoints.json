@@ -1,6 +1,11 @@
 {
+    "GET /api": {
+        "description": "Serves a list of possible endpoints",
+        "queries": [],
+        "exampleResponse": {}
+    },
     "GET /api/users": {
-        "description": "serves an array of existing users",
+        "description": "Serves an array of existing users",
         "queries": [],
         "exampleResponse": {
             "users":
@@ -18,8 +23,48 @@
             ]
         }
     },
+    "POST /api/users": {
+        "description": "Adds a new User and serves that User",
+        "queries": [],
+        "exampleResponse": {
+            "user":
+            {
+                "user_id":5,
+                "username":"TestUser*%$_1",
+                "first_name":"Testfirst",
+                "last_name":"Test Last",
+                "email":"testemail@gmail.com",
+                "password":"PasswordTest123!",
+                "image_url":"https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "admin":false,
+                "plants_count":"0"
+            }
+        }
+    },
+    "GET /api/users/:user_id": {
+        "description": "Serves a users with the given user_id",
+        "queries": [],
+        "exampleResponse": {
+            "user":
+            {
+                "user_id":1,
+                "username":"UserName£$_1",
+                "first_name":"Firstone",
+                "last_name":"Lastone",
+                "email":"email1@gmail.com",
+                "password":"Password123!",
+                "image_url":"https://images.unsplash.com/photo-1521566652839-697aa473761a?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "admin":false
+            }
+        }
+    },
+    "DELETE /api/users/:user_id": {
+        "description": "Removes the User with the given user_id",
+        "queries": [],
+        "exampleResponse": {}
+    },
     "GET /api/plants": {
-        "description": "serves an array of existing plants",
+        "description": "Serves an array of existing plants",
         "queries": [],
         "exampleResponse": {
             "plants":
@@ -36,7 +81,7 @@
         }
     },
     "GET /api/found_plants": {
-        "description": "serves an array of existing found plants",
+        "description": "Serves an array of existing found plants",
         "queries": [],
         "exampleResponse": {
             "foundPlants":
