@@ -205,6 +205,42 @@ describe("/api/plants", () => {
     })
 })
 
+describe("/api/plants/:plant_id", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and a single plant object", () => {
+            return request(app)
+            .get("/api/plants/2")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.plant).toMatchObject({
+                    plant_id: 2,
+                    plant_name: "Plant Two",
+                    about_plant: "Ex tempor ullamco est incididunt nostrud duis officia voluptate nisi occaecat laborum excepteur proident. Consectetur dolore ipsum exercitation sunt culpa id cillum aute sint nostrud eu est.",
+                    plant_image_url: "https://images.unsplash.com/photo-1476209446441-5ad72f223207?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    rarity: 100,
+                    season: ["Spring"]
+                })
+            })
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the plant_id is not a number", () => {
+            return request(app)
+            .get("/api/plants/not-a-number")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("404: Responds with a 404 status code and 'Not Found' if the plant_id does not exist", () => {
+            return request(app)
+            .get("/api/plants/999")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
+})
+
 describe("/api/found_plant", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and an array of all found_plant objects", () => {

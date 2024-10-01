@@ -1,4 +1,4 @@
-const { fetchPlants } = require("../models/plants.models")
+const { fetchPlants, fetchPlantById } = require("../models/plants.models")
 
 function getPlants(request, response, next) {
     fetchPlants()
@@ -10,4 +10,15 @@ function getPlants(request, response, next) {
     })
 }
 
-module.exports = { getPlants }
+function getPlantById(request, response, next) {
+    const plant_id = request.params.plant_id
+    fetchPlantById(plant_id)
+    .then((plant) => {
+        response.status(200).send({ plant })
+    })
+    .catch((error) => {
+        next(error)
+    })
+}
+
+module.exports = { getPlants, getPlantById }
