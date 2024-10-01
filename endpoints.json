@@ -80,6 +80,21 @@
             ]
         }
     },
+    "GET /api/plants/:plant_id": {
+        "description": "Serves a plant with the given plant_id",
+        "queries": [],
+        "exampleResponse": {
+            "plant":
+            {
+                "plant_id":2,
+                "plant_name":"Plant Two",
+                "about_plant":"Ex tempor ullamco est incididunt nostrud duis officia voluptate nisi occaecat laborum excepteur proident. Consectetur dolore ipsum exercitation sunt culpa id cillum aute sint nostrud eu est.",
+                "plant_image_url":"https://images.unsplash.com/photo-1476209446441-5ad72f223207?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "rarity":100,
+                "season":["Spring"]
+            }
+        }
+    },
     "GET /api/found_plants": {
         "description": "Serves an array of existing found plants",
         "queries": [],
