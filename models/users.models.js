@@ -12,6 +12,10 @@ function fetchUsers() {
 function addUser(newUser) {
     const columns = Object.keys(newUser)
     const values = Object.values(newUser)
+    
+    if (columns.length === 0) {
+        return Promise.reject({ status: 400, message: "Bad Request" })
+    }
 
     const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
 

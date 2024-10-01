@@ -12,6 +12,7 @@ function addPlant(newPlant) {
     
     const columns = Object.keys(newPlant)
     const values = Object.values(newPlant)
+    
     if (columns.length === 0) {
         return Promise.reject({ status: 400, message: "Bad Request" })
     }
