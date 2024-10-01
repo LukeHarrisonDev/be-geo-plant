@@ -8,6 +8,20 @@ function fetchPlants() {
     })
 }
 
+function addPlant(newPlant) {
+
+    const values = Object.values(newPlant)
+
+    let sqlQuery = `INSERT INTO plants (plant_name, about_plant, season)
+    VALUES ($1, $2, $3)
+    RETURNING *`
+    return db.query(sqlQuery, values)
+    .then(({ rows }) => {
+        return rows[0]
+    })
+
+}
+
 function fetchPlantById(plantId) {
     let sqlQuery = `SELECT * FROM plants
     WHERE plant_id = $1`
@@ -20,4 +34,4 @@ function fetchPlantById(plantId) {
     })
 }
 
-module.exports = { fetchPlants, fetchPlantById }
+module.exports = { fetchPlants, fetchPlantById, addPlant }
