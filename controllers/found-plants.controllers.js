@@ -39,6 +39,9 @@ function postFoundPlant(request, response, next) {
     .then((foundPlant) => {
         response.status(201).send({ foundPlant })
     })
+    .catch((error) => {
+        next(error)
+    })
 }
 
 module.exports = { getAllFoundPlants, getFoundPlantsByUserId, getFoundPlantById, postFoundPlant }

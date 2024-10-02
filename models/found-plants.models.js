@@ -46,6 +46,9 @@ function addFoundPlant(userId, newFoundPlant) {
     RETURNING *`
     return db.query(sqlQuery, values)
     .then(({ rows }) => {
+        if (rows.length === 0) {
+            return Promise.reject({ status: 404, message: "Not Found" })
+        }
         return rows[0]
     })
 }
