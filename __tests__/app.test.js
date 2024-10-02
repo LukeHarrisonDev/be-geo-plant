@@ -406,3 +406,31 @@ describe("/api/found_plants/:find_id", () => {
         })
     })
 })
+
+describe("/api/users/:user_id/found_plants", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and all the found plants by the given user_id", () => {
+            return request(app)
+            .get("/api/users/2/found_plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(7)
+                body.foundPlants.forEach((foundPlant) => {
+                    expect(foundPlant).toMatchObject({
+                        find_id: expect.any(Number),
+                        plant_id: expect.any(Number),
+                        found_by: 2,
+                        photo_url: expect.any(String),
+                        location_name: expect.any(String),
+                        comment: expect.any(String),
+                        created_at: expect.any(String),
+                        location: expect.objectContaining({
+                            latitude: expect.any(Number),
+                            longitude: expect.any(Number),
+                        })
+                    })
+                })
+            })
+        })
+    })
+})
