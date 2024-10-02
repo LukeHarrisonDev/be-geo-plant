@@ -1,6 +1,6 @@
 const db = require("../db/connection")
 
-function fetchFoundPlants() {
+function fetchAllFoundPlants() {
     let sqlQuery = `SELECT * FROM found_plants`
     return db.query(sqlQuery)
     .then(({ rows }) => {
@@ -20,4 +20,4 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-module.exports = { fetchFoundPlants, fetchFoundPlantById }
+module.exports = { fetchAllFoundPlants, fetchFoundPlantById }
