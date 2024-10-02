@@ -1,7 +1,7 @@
-const { fetchFoundPlants, fetchFoundPlantById } = require("../models/found-plants.models")
+const { fetchAllFoundPlants, fetchFoundPlantById } = require("../models/found-plants.models")
 
-function getFoundPlants(request, response, next) {
-    fetchFoundPlants()
+function getAllFoundPlants(request, response, next) {
+    fetchAllFoundPlants()
     .then((foundPlants) => {
         response.status(200).send({ foundPlants })
     })
@@ -21,4 +21,4 @@ function getFoundPlantById(request, response, next) {
     })
 }
 
-module.exports = { getFoundPlants, getFoundPlantById }
+module.exports = { getAllFoundPlants, getFoundPlantById }
