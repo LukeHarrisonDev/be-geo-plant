@@ -16,6 +16,9 @@ function getFoundPlantsByUserId(request, response, next) {
     .then(( foundPlants ) => {
         response.status(200).send({ foundPlants })
     })
+    .catch((error) => {
+        next(error)
+    })
 }
 
 function getFoundPlantById(request, response, next) {

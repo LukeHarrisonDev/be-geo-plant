@@ -432,5 +432,13 @@ describe("/api/users/:user_id/found_plants", () => {
                 })
             })
         })
+        test("400: Responds with a 200 status code and 'Bad Request' if the user_id is not a number", () => {
+            return request(app)
+            .get("/api/users/not-a-number/found_plants")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
     })
 })
