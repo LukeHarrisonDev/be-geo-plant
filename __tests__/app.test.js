@@ -406,3 +406,47 @@ describe("/api/found_plants/:find_id", () => {
         })
     })
 })
+
+describe("/api/users/:user_id/found_plants", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and all the found plants by the given user_id", () => {
+            return request(app)
+            .get("/api/users/2/found_plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(7)
+                body.foundPlants.forEach((foundPlant) => {
+                    expect(foundPlant).toMatchObject({
+                        find_id: expect.any(Number),
+                        plant_id: expect.any(Number),
+                        found_by: 2,
+                        photo_url: expect.any(String),
+                        location_name: expect.any(String),
+                        comment: expect.any(String),
+                        created_at: expect.any(String),
+                        location: expect.objectContaining({
+                            latitude: expect.any(Number),
+                            longitude: expect.any(Number),
+                        })
+                    })
+                })
+            })
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the user_id is not a number", () => {
+            return request(app)
+            .get("/api/users/not-a-number/found_plants")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("400: Responds with a 404 status code and 'Not Found' if the user_id does not exist", () => {
+            return request(app)
+            .get("/api/users/999/found_plants")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
+})

@@ -8,6 +8,18 @@ function fetchAllFoundPlants() {
     })
 }
 
+function fetchFoundPlantsByUserId(userId) {
+    let sqlQuery = `SELECT * from found_plants
+    WHERE found_by = $1`
+    return db.query(sqlQuery, [userId])
+    .then(({ rows }) => {
+        if (rows.length === 0) {
+            return Promise.reject({ status: 404, message: "Not Found" })
+        }
+        return rows
+    })
+}
+
 function fetchFoundPlantById(findId) {
     let sqlQuery = `SELECT * FROM found_plants
     WHERE find_id = $1`
@@ -20,4 +32,4 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-module.exports = { fetchAllFoundPlants, fetchFoundPlantById }
+module.exports = { fetchAllFoundPlants, fetchFoundPlantsByUserId, fetchFoundPlantById }
