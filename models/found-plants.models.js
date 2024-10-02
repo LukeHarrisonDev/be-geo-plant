@@ -13,6 +13,9 @@ function fetchFoundPlantsByUserId(userId) {
     WHERE found_by = $1`
     return db.query(sqlQuery, [userId])
     .then(({ rows }) => {
+        if (rows.length === 0) {
+            return Promise.reject({ status: 404, message: "Not Found" })
+        }
         return rows
     })
 }
