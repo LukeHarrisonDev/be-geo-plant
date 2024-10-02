@@ -449,4 +449,29 @@ describe("/api/users/:user_id/found_plants", () => {
             })
         })
     })
+    describe("POST", () => {
+        test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
+            const newFoundPlant = {
+                plant_id: 3,
+                location_name: 'Place Fifteen',
+                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+            }
+            return request(app)
+            .post("/api/users/3/found_plants")
+            .send(newFoundPlant)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body.foundPlant).toMatchObject({
+                    find_id: 15,
+                    plant_id: 3,
+                    found_by: 3,
+                    photo_url: "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
+                    location_name: 'Place Fifteen',
+                    location: {latitude: 53.758968939609424, longitude: -1.2222638173901648},
+                    comment: "Found, What a nice Plant",
+                    created_at: expect.any(String)
+                })
+            })
+        })
+    })
 })
