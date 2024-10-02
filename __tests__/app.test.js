@@ -473,5 +473,30 @@ describe("/api/users/:user_id/found_plants", () => {
                 })
             })
         })
+        test("201: Responds with a 201 status code and the found plant object when the client sends more than the required fields", () => {
+            const newFoundPlant = {
+                plant_id: 1,
+                location_name: 'Place Fifteen',
+                location: {latitude: 53.799647875890656, longitude: -1.520764572895235},
+                photo_url: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                comment: "Aliqua enim quis nulla aliqua dolor amet cupidatat."
+            }
+            return request(app)
+            .post("/api/users/4/found_plants")
+            .send(newFoundPlant)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body.foundPlant).toMatchObject({
+                    find_id: 15,
+                    plant_id: 1,
+                    found_by: 4,
+                    photo_url: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    location_name: 'Place Fifteen',
+                    location: {latitude: 53.799647875890656, longitude: -1.520764572895235},
+                    comment: "Aliqua enim quis nulla aliqua dolor amet cupidatat.",
+                    created_at: expect.any(String)
+                })
+            })
+        })
     })
 })

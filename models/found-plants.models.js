@@ -34,11 +34,15 @@ function fetchFoundPlantsByUserId(userId) {
 
 function addFoundPlant(userId, newFoundPlant) {
 
+    const columns = Object.keys(newFoundPlant)
     const values = Object.values(newFoundPlant)
+    columns.unshift("found_by")
     values.unshift(+userId)
 
-    let sqlQuery = `INSERT INTO found_plants (found_by, plant_id, location_name, location)
-    VALUES ($1, $2, $3, $4)
+    const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
+
+    let sqlQuery = `INSERT INTO found_plants (${columns})
+    VALUES (${placeholders})
     RETURNING *`
     return db.query(sqlQuery, values)
     .then(({ rows }) => {
