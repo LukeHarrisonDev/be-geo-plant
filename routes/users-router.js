@@ -1,3 +1,4 @@
+const { getFoundPlantsByUserId } = require("../controllers/found-plants.controllers")
 const { getUsers, getUserById, postUser, deleteUserById } = require("../controllers/users.controllers")
 
 const usersRouter = require("express").Router()
@@ -7,5 +8,7 @@ usersRouter.post("/", postUser)
 
 usersRouter.get("/:user_id", getUserById)
 usersRouter.delete("/:user_id", deleteUserById)
+
+usersRouter.get("/:user_id/found_plants", getFoundPlantsByUserId)
 
 module.exports = usersRouter

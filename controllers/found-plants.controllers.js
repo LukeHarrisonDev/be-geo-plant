@@ -1,8 +1,19 @@
-const { fetchAllFoundPlants, fetchFoundPlantById } = require("../models/found-plants.models")
+const { fetchAllFoundPlants, fetchFoundPlantById, fetchFoundPlantsByUserId, } = require("../models/found-plants.models")
 
 function getAllFoundPlants(request, response, next) {
     fetchAllFoundPlants()
     .then((foundPlants) => {
+        response.status(200).send({ foundPlants })
+    })
+    .catch((error) => {
+        next(error)
+    })
+}
+
+function getFoundPlantsByUserId(request, response, next) {
+    const user_id = request.params.user_id
+    fetchFoundPlantsByUserId(user_id)
+    .then(( foundPlants ) => {
         response.status(200).send({ foundPlants })
     })
     .catch((error) => {
@@ -21,4 +32,4 @@ function getFoundPlantById(request, response, next) {
     })
 }
 
-module.exports = { getAllFoundPlants, getFoundPlantById }
+module.exports = { getAllFoundPlants, getFoundPlantsByUserId, getFoundPlantById }
