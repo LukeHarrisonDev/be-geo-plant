@@ -243,7 +243,6 @@ describe("/api/plants", () => {
             .send(newPlant)
             .expect(201)
             .then(({ body }) => {
-                console.log(JSON.stringify(body))
                 expect(body.plant).toMatchObject({
                     plant_id: 8,
                     plant_name: "Plant Eight",
@@ -415,6 +414,7 @@ describe("/api/users/:user_id/found_plants", () => {
             .get("/api/users/2/found_plants")
             .expect(200)
             .then(({body}) => {
+                console.log(JSON.stringify(body))
                 expect(body.foundPlants).toHaveLength(7)
                 body.foundPlants.forEach((foundPlant) => {
                     expect(foundPlant).toMatchObject({
