@@ -486,7 +486,6 @@ describe("/api/users/:user_id/found_plants", () => {
             .send(newFoundPlant)
             .expect(201)
             .then(({ body }) => {
-                console.log(JSON.stringify(body))
                 expect(body.foundPlant).toMatchObject({
                     find_id: 15,
                     plant_id: 1,
