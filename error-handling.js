@@ -9,6 +9,13 @@ function badRequest(error, request, response, next) {
     next(error)
 }
 
+function notFoundError(error, request, response, next) {
+    if (error.code === "23503") {
+        response.status(404).send({ message: "Not Found" })
+    }
+    next(error)
+}
+
 function customError(error, request, response, next) {
     if (error.status && error.message) {
         response.status(error.status).send({ message: error.message })
@@ -16,4 +23,4 @@ function customError(error, request, response, next) {
     next(error)
 }
 
-module.exports = { catchInvalidEndpoints, customError, badRequest }
+module.exports = { catchInvalidEndpoints, notFoundError, badRequest, customError }
