@@ -80,6 +80,21 @@
             ]
         }
     },
+    "POST /api/plants": {
+        "description": "Adds a new Plant and serves that Plant",
+        "queries": [],
+        "exampleResponse": {
+            "plant":
+            {
+                "plant_id":8,
+                "plant_name":"Plant Eight",
+                "about_plant":"Labore consectetur nisi quis ut adipisicing. Ex tempor ea nisi aliqua minim eiusmod magna ullamco id eu commodo et irure dolor.",
+                "plant_image_url":"https://images.unsplash.com/photo-1476209446441-5ad72f223207?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "rarity":100,
+                "season":["Spring","Winter"]
+            }
+        }
+    },
     "GET /api/plants/:plant_id": {
         "description": "Serves a plant with the given plant_id",
         "queries": [],
