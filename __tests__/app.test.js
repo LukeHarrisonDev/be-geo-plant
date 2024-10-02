@@ -449,4 +449,82 @@ describe("/api/users/:user_id/found_plants", () => {
             })
         })
     })
+    describe("POST", () => {
+        test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
+            const newFoundPlant = {
+                plant_id: 3,
+                location_name: 'Place Fifteen',
+                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+            }
+            return request(app)
+            .post("/api/users/3/found_plants")
+            .send(newFoundPlant)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body.foundPlant).toMatchObject({
+                    find_id: 15,
+                    plant_id: 3,
+                    found_by: 3,
+                    photo_url: "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
+                    location_name: 'Place Fifteen',
+                    location: {latitude: 53.758968939609424, longitude: -1.2222638173901648},
+                    comment: "Found, What a nice Plant",
+                    created_at: expect.any(String)
+                })
+            })
+        })
+        test("201: Responds with a 201 status code and the found plant object when the client sends more than the required fields", () => {
+            const newFoundPlant = {
+                plant_id: 1,
+                location_name: 'Place Fifteen',
+                location: {latitude: 53.799647875890656, longitude: -1.520764572895235},
+                photo_url: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                comment: "Aliqua enim quis nulla aliqua dolor amet cupidatat."
+            }
+            return request(app)
+            .post("/api/users/4/found_plants")
+            .send(newFoundPlant)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body.foundPlant).toMatchObject({
+                    find_id: 15,
+                    plant_id: 1,
+                    found_by: 4,
+                    photo_url: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    location_name: 'Place Fifteen',
+                    location: {latitude: 53.799647875890656, longitude: -1.520764572895235},
+                    comment: "Aliqua enim quis nulla aliqua dolor amet cupidatat.",
+                    created_at: expect.any(String)
+                })
+            })
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the user_id is not a number", () => {
+            const newFoundPlant = {
+                plant_id: 3,
+                location_name: 'Place Fifteen',
+                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+            }
+            return request(app)
+            .post("/api/users/not-a-number/found_plants")
+            .send(newFoundPlant)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("400: Responds with a 404 status code and 'Not Found' if the user_id does not exist", () => {
+            const newFoundPlant = {
+                plant_id: 3,
+                location_name: 'Place Fifteen',
+                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+            }
+            return request(app)
+            .post("/api/users/999/found_plants")
+            .send(newFoundPlant)
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
 })
