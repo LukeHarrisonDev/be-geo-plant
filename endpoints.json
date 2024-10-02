@@ -83,6 +83,23 @@
             ]
         }
     },
+    "POST /api/users/:user_id/found_plants": {
+        "description": "Adds a new Found Plant and serves that Found Plant",
+        "queries": [],
+        "exampleResponse": {
+            "foundPlant":
+            {
+                "find_id":15,
+                "plant_id":1,
+                "found_by":4,
+                "photo_url":"https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "location_name":"Place Fifteen",
+                "location":{"latitude":53.799647875890656,"longitude":-1.520764572895235},
+                "comment":"Aliqua enim quis nulla aliqua dolor amet cupidatat.",
+                "created_at":"2024-10-02T15:29:05.110Z"
+            }
+        }
+    },
     "GET /api/plants": {
         "description": "Serves an array of existing plants",
         "queries": [],
