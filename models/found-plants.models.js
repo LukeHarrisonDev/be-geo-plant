@@ -53,4 +53,17 @@ function addFoundPlant(userId, newFoundPlant) {
     })
 }
 
-module.exports = { fetchAllFoundPlants, fetchFoundPlantsByUserId, fetchFoundPlantById, addFoundPlant }
+function removeFoundPlantById(findId) {
+    let sqlQuery = `DELETE FROM found_plants
+    WHERE find_id = $1
+    RETURNING *`
+    return db.query(sqlQuery, [findId])
+}
+
+module.exports = {
+    fetchAllFoundPlants,
+    fetchFoundPlantsByUserId,
+    fetchFoundPlantById,
+    addFoundPlant,
+    removeFoundPlantById
+}
