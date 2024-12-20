@@ -1,4 +1,4 @@
-const { fetchAllFoundPlants, fetchFoundPlantById, fetchFoundPlantsByUserId, addFoundPlant, } = require("../models/found-plants.models")
+const { fetchAllFoundPlants, fetchFoundPlantById, fetchFoundPlantsByUserId, addFoundPlant, removeFoundPlantById, } = require("../models/found-plants.models")
 
 function getAllFoundPlants(request, response, next) {
     fetchAllFoundPlants()
@@ -44,4 +44,18 @@ function postFoundPlant(request, response, next) {
     })
 }
 
-module.exports = { getAllFoundPlants, getFoundPlantsByUserId, getFoundPlantById, postFoundPlant }
+function deleteFoundPlantById(request, response, next) {
+    const { find_id } = request.params
+    removeFoundPlantById(find_id)
+    .then(() => {
+        response.status(204).send()
+    })
+}
+
+module.exports = {
+    getAllFoundPlants,
+    getFoundPlantsByUserId,
+    getFoundPlantById,
+    postFoundPlant,
+    deleteFoundPlantById
+}

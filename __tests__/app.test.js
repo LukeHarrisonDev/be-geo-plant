@@ -405,6 +405,13 @@ describe("/api/found_plants/:find_id", () => {
             })
         })
     })
+    describe("DELETE", () => {
+        test("204: Responds with a 204 status code and no content if the given find has been deleted", () => {
+            return request(app)
+            .delete("/api/found_plants/3")
+            .expect(204)
+        })
+    })
 })
 
 describe("/api/users/:user_id/found_plants", () => {
