@@ -1,4 +1,5 @@
 const db = require("../db/connection")
+const { find } = require("../db/data/test-data/users")
 
 function fetchAllFoundPlants() {
     let sqlQuery = `SELECT * FROM found_plants`
@@ -58,6 +59,11 @@ function removeFoundPlantById(findId) {
     WHERE find_id = $1
     RETURNING *`
     return db.query(sqlQuery, [findId])
+    .then(({rows}) => {
+        if (rows.length === 0) {
+            return Promise.reject({ status: 404, message: "Not Found"})
+        }
+    })
 }
 
 module.exports = {
