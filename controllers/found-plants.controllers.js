@@ -50,6 +50,9 @@ function deleteFoundPlantById(request, response, next) {
     .then(() => {
         response.status(204).send()
     })
+    .catch((error) => {
+        next(error)
+    })
 }
 
 module.exports = {

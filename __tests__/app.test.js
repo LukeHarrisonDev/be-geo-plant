@@ -411,6 +411,22 @@ describe("/api/found_plants/:find_id", () => {
             .delete("/api/found_plants/3")
             .expect(204)
         })
+        test("400: Responds with a 400 status code and 'Bad Request' if the find_id is not a number", () => {
+            return request(app)
+            .delete("/api/found_plants/not-a-number")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("404: Responds with a 404 status code and 'Not Found' if the find_id does not exist", () => {
+            return request(app)
+            .delete("/api/found_plants/999")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
     })
 })
 
