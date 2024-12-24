@@ -20,17 +20,19 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at") {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc") {
     
-    const greenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
+    const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
 
-    if (!greenlist.includes(sortBy)) {
+    const orderGreenlist = ["asc", "desc"]
+
+    if (!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
         return Promise.reject({ status: 400, message: "Bad request" });
     }
 
-    let sqlQuery = `SELECT * from found_plants
+    let sqlQuery = `SELECT * FROM found_plants
     WHERE found_by = $1
-    ORDER BY ${sortBy} DESC`
+    ORDER BY ${sortBy} ${orderBy.toUpperCase()}`
     return db.query(sqlQuery, [userId])
     .then(({ rows }) => {
         if (rows.length === 0) {
