@@ -24,11 +24,13 @@ function getFoundPlantById(request, response, next) {
 function getFoundPlantsByUserId(request, response, next) {
     const user_id = request.params.user_id
     const sort_by = request.query.sort_by
-    fetchFoundPlantsByUserId(user_id, sort_by)
+    const order_by = request.query.order_by
+    fetchFoundPlantsByUserId(user_id, sort_by, order_by)
     .then(( foundPlants ) => {
         response.status(200).send({ foundPlants })
     })
     .catch((error) => {
+        console.log(error, "<<< Error")
         next(error)
     })
 }
