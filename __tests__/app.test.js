@@ -508,7 +508,7 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body.foundPlants).toBeSortedBy('created_at', { descending: false })
             })
         })
-        test.only("?order= 400: Responds with 'Bad request' when the 'order' query is anything apart from 'asc' or 'desc'", () => {
+        test("?order= 400: Responds with 'Bad request' when the 'order' query is anything apart from 'asc' or 'desc'", () => {
             return request(app)
             .get("/api/users/2/found_plants?order_by=not-an-order")
             .expect(400)
