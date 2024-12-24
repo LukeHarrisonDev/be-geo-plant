@@ -90,16 +90,17 @@ function seed ({userData, plantData, foundPlantsData}) {
             const formattedFoundPlants = foundPlantsData.map(convertTimestampToDate)
             const insertFoundPlantsData = format(
                 `INSERT INTO found_plants (plant_id,
-                found_by, location_name, location, photo_url, comment
+                found_by, location_name, location, photo_url, comment, created_at
                 ) VALUES %L;`,
-                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_url, comment }) => {
+                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_url, comment, created_at }) => {
                     return [
                         plant_id,
                         found_by,
                         location_name,
                         JSON.stringify(location),
                         photo_url || "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
-                        comment || 'Found, What a nice Plant'
+                        comment || 'Found, What a nice Plant',
+                        created_at || new Date()
                     ]
                 })
             )

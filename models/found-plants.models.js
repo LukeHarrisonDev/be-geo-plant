@@ -21,9 +21,10 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId) {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at") {
     let sqlQuery = `SELECT * from found_plants
-    WHERE found_by = $1`
+    WHERE found_by = $1
+    ORDER BY ${sortBy} DESC`
     return db.query(sqlQuery, [userId])
     .then(({ rows }) => {
         if (rows.length === 0) {
