@@ -1,5 +1,4 @@
 const db = require("../db/connection")
-const { find } = require("../db/data/test-data/users")
 
 function fetchAllFoundPlants() {
     let sqlQuery = `SELECT * FROM found_plants`
@@ -22,6 +21,13 @@ function fetchFoundPlantById(findId) {
 }
 
 function fetchFoundPlantsByUserId(userId, sortBy = "created_at") {
+    
+    const greenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
+
+    if (!greenlist.includes(sortBy)) {
+        return Promise.reject({ status: 400, message: "Bad request" });
+    }
+
     let sqlQuery = `SELECT * from found_plants
     WHERE found_by = $1
     ORDER BY ${sortBy} DESC`
