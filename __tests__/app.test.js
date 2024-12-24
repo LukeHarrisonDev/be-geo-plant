@@ -472,6 +472,34 @@ describe("/api/users/:user_id/found_plants", () => {
             })
         })
     })
+    describe("GET Queries", () => {
+        test("?sort_by= 200: Responds with the given users found plants ordered by the column of created_at", () => {
+            return request(app)
+            .get("/api/users/2/found_plants?sort_by=created_at")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(7)
+                expect(body.foundPlants).toBeSortedBy("created_at", { descending: true })
+            })
+        })
+        test("?sort_by= 200: Responds with the given users found plants ordered by another column of the given 'sort_by' query", () => {
+            return request(app)
+            .get("/api/users/3/found_plants?sort_by=location_name")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(6)
+                expect(body.foundPlants).toBeSortedBy("location_name", { descending: true })
+            })
+        })
+        test("sort_by= 400: Responds with 'Bad request' when the given column name doesn't exist in the table", () => {
+            return request(app)
+            .get("/api/users/2/found_plants?sort_by=not-a-column")
+            .expect(400)
+            .then(({body}) => {
+                expect(body).toEqual({message: "Bad request"})
+            })
+        })
+    })
     describe("POST", () => {
         test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
             const newFoundPlant = {
