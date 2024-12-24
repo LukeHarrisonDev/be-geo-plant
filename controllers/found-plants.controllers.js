@@ -30,7 +30,6 @@ function getFoundPlantsByUserId(request, response, next) {
         response.status(200).send({ foundPlants })
     })
     .catch((error) => {
-        console.log(error, "<<< Error")
         next(error)
     })
 }
