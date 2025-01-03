@@ -11,7 +11,7 @@ function getAllFoundPlants(request, response, next) {
 }
 
 function getFoundPlantById(request, response, next) {
-    const find_id = request.params.find_id
+    const { find_id } = request.params
     fetchFoundPlantById(find_id)
     .then((foundPlant) => {
         response.status(200).send({ foundPlant })
@@ -22,11 +22,8 @@ function getFoundPlantById(request, response, next) {
 }
 
 function getFoundPlantsByUserId(request, response, next) {
-    const user_id = request.params.user_id
-    const sort_by = request.query.sort_by
-    const order_by = request.query.order_by
-    const position = request.query.position
-    const sort_by_distance = request.query.sort_by_distance
+    const { user_id } = request.params
+    const { sort_by, order_by, position, sort_by_distance } = request.query
     fetchFoundPlantsByUserId(user_id, sort_by, order_by, position, sort_by_distance)
     .then(( foundPlants ) => {
         response.status(200).send({ foundPlants })
@@ -37,7 +34,7 @@ function getFoundPlantsByUserId(request, response, next) {
 }
 
 function postFoundPlant(request, response, next) {
-    const user_id = request.params.user_id
+    const { user_id } = request.params
     const newFoundPlant = request.body
     addFoundPlant(user_id, newFoundPlant)
     .then((foundPlant) => {

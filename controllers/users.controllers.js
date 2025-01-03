@@ -22,7 +22,7 @@ function postUser(request, response, next) {
 }
 
 function getUserById(request, response, next) {
-    const user_id = request.params.user_id
+    const { user_id } = request.params
     fetchUserById(user_id)
     .then((user) => {
         response.status(200).send({ user })
@@ -33,7 +33,7 @@ function getUserById(request, response, next) {
 }
 
 function deleteUserById(request, response, next) {
-    const user_id = request.params.user_id
+    const { user_id } = request.params
     removeUserById(user_id)
     .then(() => {
         response.status(204).send()
