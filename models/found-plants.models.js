@@ -1,3 +1,4 @@
+const Distance = require("geo-distance")
 const db = require("../db/connection")
 
 function fetchAllFoundPlants() {
@@ -20,7 +21,7 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc") {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sort_by_distance) {
     
     const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
 
@@ -37,6 +38,20 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
     .then(({ rows }) => {
         if (rows.length === 0) {
             return Promise.reject({ status: 404, message: "Not Found" })
+        }
+        if(sort_by_distance) {
+            const splitPosition = position.split(",")
+            const location = {lat: splitPosition[0], lon: splitPosition[1]}
+            const foundPlantsWithDistance = rows.map((foundPlant) => {
+                const distance = Distance.between(location, foundPlant.location)
+                foundPlant.distanceInRadians = distance.radians
+                foundPlant.distanceInKm = distance.human_readable().distance
+                return foundPlant
+            })
+            foundPlantsWithDistance.sort((a, b) => {
+                return a.distanceInKm - b.distanceInKm
+            })
+            return foundPlantsWithDistance
         }
         return rows
     })

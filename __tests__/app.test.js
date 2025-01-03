@@ -359,8 +359,8 @@ describe("/api/found_plants", () => {
                         comment: expect.any(String),
                         created_at: expect.any(String),
                         location: expect.objectContaining({
-                            latitude: expect.any(Number),
-                            longitude: expect.any(Number),
+                            lat: expect.any(Number),
+                            lon: expect.any(Number),
                         })
                     })
                 })
@@ -381,7 +381,7 @@ describe("/api/found_plants/:find_id", () => {
                     plant_id: 2,
                     found_by: 2,
                     location_name: 'Place Seven',
-                    location: {latitude: 51.97567141748108, longitude: -2.1932002831539124},
+                    location: {lat: 51.97567141748108, lon: -2.1932002831539124},
                     photo_url: "https://images.unsplash.com/photo-1538998073820-4dfa76300194?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     comment: "Found, What a nice Plant",
                     created_at: expect.any(String)
@@ -448,8 +448,8 @@ describe("/api/users/:user_id/found_plants", () => {
                         comment: expect.any(String),
                         created_at: expect.any(String),
                         location: expect.objectContaining({
-                            latitude: expect.any(Number),
-                            longitude: expect.any(Number),
+                            lat: expect.any(Number),
+                            lon: expect.any(Number),
                         })
                     })
                 })
@@ -525,13 +525,22 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body.foundPlants).toBeSortedBy("location_name", { descending: false })
             })
         })
+        test("?distance= 200: Responds with the given users found plants ordered by the distance", () => {
+            return request(app)
+            .get("/api/users/3/found_plants?position=53.79354,-1.75064&sort_by_distance=distanceInKm")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(6)
+                expect(body.foundPlants).toBeSortedBy("distanceInKm", { descending: false, coerce: true })
+            })
+        })
     })
     describe("POST", () => {
         test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
             const newFoundPlant = {
                 plant_id: 3,
                 location_name: 'Place Fifteen',
-                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+                location: {lat: 53.758968939609424, lon: -1.2222638173901648}
             }
             return request(app)
             .post("/api/users/3/found_plants")
@@ -544,7 +553,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     found_by: 3,
                     photo_url: "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
                     location_name: 'Place Fifteen',
-                    location: {latitude: 53.758968939609424, longitude: -1.2222638173901648},
+                    location: {lat: 53.758968939609424, lon: -1.2222638173901648},
                     comment: "Found, What a nice Plant",
                     created_at: expect.any(String)
                 })
@@ -554,7 +563,7 @@ describe("/api/users/:user_id/found_plants", () => {
             const newFoundPlant = {
                 plant_id: 1,
                 location_name: 'Place Fifteen',
-                location: {latitude: 53.799647875890656, longitude: -1.520764572895235},
+                location: {lat: 53.799647875890656, lon: -1.520764572895235},
                 photo_url: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 comment: "Aliqua enim quis nulla aliqua dolor amet cupidatat."
             }
@@ -569,7 +578,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     found_by: 4,
                     photo_url: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     location_name: 'Place Fifteen',
-                    location: {latitude: 53.799647875890656, longitude: -1.520764572895235},
+                    location: {lat: 53.799647875890656, lon: -1.520764572895235},
                     comment: "Aliqua enim quis nulla aliqua dolor amet cupidatat.",
                     created_at: expect.any(String)
                 })
@@ -579,7 +588,7 @@ describe("/api/users/:user_id/found_plants", () => {
             const newFoundPlant = {
                 plant_id: 3,
                 location_name: 'Place Fifteen',
-                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+                location: {lat: 53.758968939609424, lon: -1.2222638173901648}
             }
             return request(app)
             .post("/api/users/not-a-number/found_plants")
@@ -593,7 +602,7 @@ describe("/api/users/:user_id/found_plants", () => {
             const newFoundPlant = {
                 plant_id: 3,
                 location_name: 'Place Fifteen',
-                location: {latitude: 53.758968939609424, longitude: -1.2222638173901648}
+                location: {lat: 53.758968939609424, lon: -1.2222638173901648}
             }
             return request(app)
             .post("/api/users/999/found_plants")
