@@ -1,3 +1,4 @@
+const Distance = require("geo-distance")
 const db = require("../db/connection")
 
 function fetchAllFoundPlants() {
@@ -20,21 +21,37 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at") {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sort_by_distance) {
     
-    const greenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
+    const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
 
-    if (!greenlist.includes(sortBy)) {
+    const orderGreenlist = ["asc", "desc"]
+
+    if (!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
         return Promise.reject({ status: 400, message: "Bad request" });
     }
 
-    let sqlQuery = `SELECT * from found_plants
+    let sqlQuery = `SELECT * FROM found_plants
     WHERE found_by = $1
-    ORDER BY ${sortBy} DESC`
+    ORDER BY ${sortBy} ${orderBy.toUpperCase()}`
     return db.query(sqlQuery, [userId])
     .then(({ rows }) => {
         if (rows.length === 0) {
             return Promise.reject({ status: 404, message: "Not Found" })
+        }
+        if(sort_by_distance) {
+            const splitPosition = position.split(",")
+            const location = {lat: splitPosition[0], lon: splitPosition[1]}
+            const foundPlantsWithDistance = rows.map((foundPlant) => {
+                const distance = Distance.between(location, foundPlant.location)
+                foundPlant.distanceInRadians = distance.radians
+                foundPlant.distanceInKm = distance.human_readable().distance
+                return foundPlant
+            })
+            foundPlantsWithDistance.sort((a, b) => {
+                return a.distanceInKm - b.distanceInKm
+            })
+            return foundPlantsWithDistance
         }
         return rows
     })
