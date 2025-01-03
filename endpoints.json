@@ -64,8 +64,8 @@
         "exampleResponse": {}
     },
     "GET /api/users/:user_id/found_plants": {
-        "description": "Serves a given users found plants",
-        "queries": [],
+        "description": "Serves a given users found plants, (when using 'sort_by_distance' a position must also be given)",
+        "queries": ["sort_by", "order", "sort_by_distance"],
         "exampleResponse": {
             "foundPlants":
             [
