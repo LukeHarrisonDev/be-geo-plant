@@ -443,6 +443,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     expect(foundPlant).toMatchObject({
                         find_id: expect.any(Number),
                         plant_id: expect.any(Number),
+                        plant_name: expect.any(String),
                         found_by: 2,
                         photo_url: expect.any(String),
                         location_name: expect.any(String),
