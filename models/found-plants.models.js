@@ -1,5 +1,6 @@
 const Distance = require("geo-distance")
 const db = require("../db/connection")
+const { checkIfExists } = require("../db/seeds/utils")
 
 function fetchAllFoundPlants() {
     let sqlQuery = `SELECT * FROM found_plants`
@@ -42,22 +43,25 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
     ORDER BY ${sortBy} ${orderBy.toUpperCase()}`
     return db.query(sqlQuery, [userId])
     .then(({ rows }) => {
-        if (rows.length === 0) {
-            return Promise.reject({ status: 404, message: "Not Found" })
-        }
-        if(sort_by_distance) {
-            const foundPlantsWithDistance = rows.map((foundPlant) => {
-                const distance = Distance.between(position, foundPlant.location)
-                foundPlant.distanceInRadians = distance.radians
-                foundPlant.distanceInKm = distance.human_readable().distance
-                return foundPlant
-            })
-            foundPlantsWithDistance.sort((a, b) => {
-                return a.distanceInKm - b.distanceInKm
-            })
-            return foundPlantsWithDistance
-        }
-        return rows
+        return checkIfExists("users", "user_id", userId)
+        .then((result) => {
+            if(!result) {
+                return Promise.reject({ status: 404, message: "Not Found" })
+            }
+            if(sort_by_distance) {
+                const foundPlantsWithDistance = rows.map((foundPlant) => {
+                    const distance = Distance.between(position, foundPlant.location)
+                    foundPlant.distanceInRadians = distance.radians
+                    foundPlant.distanceInKm = distance.human_readable().distance
+                    return foundPlant
+                })
+                foundPlantsWithDistance.sort((a, b) => {
+                    return a.distanceInKm - b.distanceInKm
+                })
+                return foundPlantsWithDistance
+            }
+            return rows
+        })
     })
 }
 
