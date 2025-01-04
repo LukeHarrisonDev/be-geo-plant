@@ -179,7 +179,8 @@
                 "location_name":"Place Seven",
                 "location":{"latitude":51.97567141748108,"longitude":-2.1932002831539124},
                 "comment":"Found, What a nice Plant",
-                "created_at":"2024-10-01T19:58:14.738Z"
+                "created_at":"2024-10-01T19:58:14.738Z",
+                "plant_name":"Plant Two"
             }
         }
     },
