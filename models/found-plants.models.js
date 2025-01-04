@@ -40,10 +40,8 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
             return Promise.reject({ status: 404, message: "Not Found" })
         }
         if(sort_by_distance) {
-            const splitPosition = position.split(",")
-            const location = {lat: splitPosition[0], lon: splitPosition[1]}
             const foundPlantsWithDistance = rows.map((foundPlant) => {
-                const distance = Distance.between(location, foundPlant.location)
+                const distance = Distance.between(position, foundPlant.location)
                 foundPlant.distanceInRadians = distance.radians
                 foundPlant.distanceInKm = distance.human_readable().distance
                 return foundPlant
