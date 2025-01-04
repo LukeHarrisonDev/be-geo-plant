@@ -527,7 +527,9 @@ describe("/api/users/:user_id/found_plants", () => {
         })
         test("?distance= 200: Responds with the given users found plants ordered by the distance", () => {
             return request(app)
-            .get("/api/users/3/found_plants?position=53.79354,-1.75064&sort_by_distance=distanceInKm")
+            .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+            .set("lat", "53.79354")
+            .set("lon", "-1.75064")
             .expect(200)
             .then(({body}) => {
                 expect(body.foundPlants).toHaveLength(6)
