@@ -22,7 +22,7 @@ function postPlant(request, response, next) {
 }
 
 function getPlantById(request, response, next) {
-    const plant_id = request.params.plant_id
+    const { plant_id } = request.params
     fetchPlantById(plant_id)
     .then((plant) => {
         response.status(200).send({ plant })
