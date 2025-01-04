@@ -34,7 +34,10 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
         return Promise.reject({ status: 400, message: "Bad request" });
     }
 
-    let sqlQuery = `SELECT * FROM found_plants
+    let sqlQuery = `SELECT found_plants.*, plants.plant_name
+    FROM found_plants
+    LEFT JOIN plants
+    ON found_plants.plant_id = plants.plant_id
     WHERE found_by = $1
     ORDER BY ${sortBy} ${orderBy.toUpperCase()}`
     return db.query(sqlQuery, [userId])
