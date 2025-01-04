@@ -10,7 +10,10 @@ function fetchAllFoundPlants() {
 }
 
 function fetchFoundPlantById(findId) {
-    let sqlQuery = `SELECT * FROM found_plants
+    let sqlQuery = `SELECT found_plants.*, plants.plant_name
+    FROM found_plants
+    LEFT JOIN plants
+    ON found_plants.plant_id = plants.plant_id
     WHERE find_id = $1`
     return db.query(sqlQuery, [findId])
     .then(({ rows }) => {
