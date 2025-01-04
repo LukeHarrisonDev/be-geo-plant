@@ -473,6 +473,15 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body).toEqual({ message: "Not Found" })
             })
         })
+        test("200: Responds with a 200 status code and an empty array if there are no found plants", () => {
+            return request(app)
+            .get("/api/users/1/found_plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(0)
+                expect(body.foundPlants).toEqual([])
+            })
+        })
     })
     describe("GET Queries", () => {
         test("?sort_by= 200: Responds with the given users found plants ordered by the column of created_at", () => {
