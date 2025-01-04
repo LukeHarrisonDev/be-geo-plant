@@ -379,6 +379,7 @@ describe("/api/found_plants/:find_id", () => {
                 expect(body.foundPlant).toMatchObject({
                     find_id: 7,
                     plant_id: 2,
+                    plant_name: "Plant Two",
                     found_by: 2,
                     location_name: 'Place Seven',
                     location: {lat: 51.97567141748108, lon: -2.1932002831539124},
