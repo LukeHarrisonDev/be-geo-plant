@@ -379,6 +379,7 @@ describe("/api/found_plants/:find_id", () => {
                 expect(body.foundPlant).toMatchObject({
                     find_id: 7,
                     plant_id: 2,
+                    plant_name: "Plant Two",
                     found_by: 2,
                     location_name: 'Place Seven',
                     location: {lat: 51.97567141748108, lon: -2.1932002831539124},
@@ -442,6 +443,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     expect(foundPlant).toMatchObject({
                         find_id: expect.any(Number),
                         plant_id: expect.any(Number),
+                        plant_name: expect.any(String),
                         found_by: 2,
                         photo_url: expect.any(String),
                         location_name: expect.any(String),
@@ -469,6 +471,15 @@ describe("/api/users/:user_id/found_plants", () => {
             .expect(404)
             .then(({ body }) => {
                 expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+        test("200: Responds with a 200 status code and an empty array if there are no found plants", () => {
+            return request(app)
+            .get("/api/users/1/found_plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.foundPlants).toHaveLength(0)
+                expect(body.foundPlants).toEqual([])
             })
         })
     })
