@@ -536,17 +536,96 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body.foundPlants).toBeSortedBy("location_name", { descending: false })
             })
         })
-        test("?distance= 200: Responds with the given users found plants ordered by the distance", () => {
-            return request(app)
-            .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
-            .set("lat", "53.79354")
-            .set("lon", "-1.75064")
-            .expect(200)
-            .then(({body}) => {
-                expect(body.foundPlants).toHaveLength(6)
-                expect(body.foundPlants).toBeSortedBy("distanceInKm", { descending: false, coerce: true })
+        describe("distance", () => {
+            test("?sort_by_distance= 200: Responds with the given users found plants ordered by the distance", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lat", "53.79354")
+                .set("lon", "-1.75064")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(6)
+                    expect(body.foundPlants).toBeSortedBy("distanceInKm", { descending: false, coerce: true })
+                })
+            })
+            test("?sort_by_distance= 400: Responds with 'Bad request' when the 'sort_by_distance is invalid", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=not-valid")
+                .set("lat", "53.79354")
+                .set("lon", "-1.75064")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Responds with 'Bad request' when the headers are missing", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Responds with 'Bad request' when the 'lon' header is missing", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lat", "53.79354")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Responds with 'Bad request' when the 'lat' header is missing", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lon", "-1.75064")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the latitude isn't valid", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lat", "not-a-valid-latitude")
+                .set("lon", "-1.75064")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the latitude isn't valid", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lat", "53.79354")
+                .set("lon", "not-a-valid-longitude")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the latitude is out of range", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lat", "153.79354")
+                .set("lon", "-1.75064")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
+            })
+            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the longitude is out of range", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
+                .set("lat", "53.79354")
+                .set("lon", "-199.75064")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad request"})
+                })
             })
         })
+        
     })
     describe("POST", () => {
         test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {

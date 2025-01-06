@@ -25,7 +25,7 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sort_by_distance) {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance) {
     
     const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
 
@@ -48,7 +48,23 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
             if(!result) {
                 return Promise.reject({ status: 404, message: "Not Found" })
             }
-            if(sort_by_distance) {
+            if(sortByDistance) {
+                position.lat = +position.lat
+                position.lon = +position.lon
+                const sortDistanceByGreenlist = ["distanceInKm"]
+                
+                if (!sortDistanceByGreenlist.includes(sortByDistance)) {
+                    return Promise.reject({ status: 400, message: "Bad request" });
+                }
+                
+                if (position.lat == null || position.lon == null) {
+                    return Promise.reject({ status: 400, message: "Bad request" });
+                }
+                
+                if (isNaN(position.lat) || isNaN(position.lon) || position.lat < -90 || position.lat > 90 || position.lon < -180 || position.lon > 180) {
+                    return Promise.reject({ status: 400, message: "Bad request" });
+                }
+
                 const foundPlantsWithDistance = rows.map((foundPlant) => {
                     const distance = Distance.between(position, foundPlant.location)
                     foundPlant.distanceInRadians = distance.radians
