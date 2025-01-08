@@ -37,6 +37,10 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
         return Promise.reject({ status: 400, message: "Bad Request" });
     }
 
+    if(!Array.isArray(season)) {
+        season = [season]
+    }
+
     let queryValues = [userId, season]
 
     let sqlQuery = `SELECT found_plants.*, plants.plant_name, plants.season
