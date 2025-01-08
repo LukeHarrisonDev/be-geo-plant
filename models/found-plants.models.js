@@ -25,23 +25,42 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance) {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance, plantName) {
     
     const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
 
     const orderGreenlist = ["asc", "desc"]
 
     if (!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
-        return Promise.reject({ status: 400, message: "Bad request" });
+        return Promise.reject({ status: 400, message: "Bad Request" });
     }
+
+    let queryValues = [userId]
 
     let sqlQuery = `SELECT found_plants.*, plants.plant_name
     FROM found_plants
     LEFT JOIN plants
     ON found_plants.plant_id = plants.plant_id
-    WHERE found_by = $1
-    ORDER BY ${sortBy} ${orderBy.toUpperCase()}`
-    return db.query(sqlQuery, [userId])
+    WHERE found_by = $1 `
+
+    let plantCheck
+    if(plantName) {
+        plantCheck = checkIfExists("plants", "plant_name", plantName)
+        .then((result) => {
+            if(!result) {
+                return Promise.reject({ status: 404, message: "Not Found" })
+            }
+            sqlQuery += 'AND plant_name = $2 '
+            queryValues.push(plantName)
+        })
+    } else {
+        plantCheck = Promise.resolve()
+    }
+
+    return plantCheck.then(() => {
+        sqlQuery += `ORDER BY ${sortBy} ${orderBy.toUpperCase()}`
+        return db.query(sqlQuery, queryValues)
+    })
     .then(({ rows }) => {
         return checkIfExists("users", "user_id", userId)
         .then((result) => {
@@ -54,15 +73,15 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
                 const sortDistanceByGreenlist = ["distanceInKm"]
                 
                 if (!sortDistanceByGreenlist.includes(sortByDistance)) {
-                    return Promise.reject({ status: 400, message: "Bad request" });
+                    return Promise.reject({ status: 400, message: "Bad Request" });
                 }
                 
                 if (position.lat == null || position.lon == null) {
-                    return Promise.reject({ status: 400, message: "Bad request" });
+                    return Promise.reject({ status: 400, message: "Bad Request" });
                 }
                 
                 if (isNaN(position.lat) || isNaN(position.lon) || position.lat < -90 || position.lat > 90 || position.lon < -180 || position.lon > 180) {
-                    return Promise.reject({ status: 400, message: "Bad request" });
+                    return Promise.reject({ status: 400, message: "Bad Request" });
                 }
 
                 const foundPlantsWithDistance = rows.map((foundPlant) => {
