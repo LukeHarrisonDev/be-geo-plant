@@ -484,59 +484,61 @@ describe("/api/users/:user_id/found_plants", () => {
         })
     })
     describe("GET Queries", () => {
-        test("?sort_by= 200: Responds with the given users found plants ordered by the column of created_at", () => {
-            return request(app)
-            .get("/api/users/2/found_plants?sort_by=created_at")
-            .expect(200)
-            .then(({body}) => {
-                expect(body.foundPlants).toHaveLength(7)
-                expect(body.foundPlants).toBeSortedBy("created_at", { descending: true })
+        describe("sort_by & order", () => {
+            test("?sort_by= 200: Responds with the given users found plants ordered by the column of created_at", () => {
+                return request(app)
+                .get("/api/users/2/found_plants?sort_by=created_at")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(7)
+                    expect(body.foundPlants).toBeSortedBy("created_at", { descending: true })
+                })
             })
-        })
-        test("?sort_by= 200: Responds with the given users found plants ordered by another column of the given 'sort_by' query", () => {
-            return request(app)
-            .get("/api/users/3/found_plants?sort_by=location_name")
-            .expect(200)
-            .then(({body}) => {
-                expect(body.foundPlants).toHaveLength(6)
-                expect(body.foundPlants).toBeSortedBy("location_name", { descending: true })
+            test("?sort_by= 200: Responds with the given users found plants ordered by another column of the given 'sort_by' query", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?sort_by=location_name")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(6)
+                    expect(body.foundPlants).toBeSortedBy("location_name", { descending: true })
+                })
             })
-        })
-        test("sort_by= 400: Responds with 'Bad request' when the given column name doesn't exist in the table", () => {
-            return request(app)
-            .get("/api/users/2/found_plants?sort_by=not-a-column")
-            .expect(400)
-            .then(({body}) => {
-                expect(body).toEqual({message: "Bad request"})
+            test("sort_by= 400: Responds with 'Bad Request' when the given column name doesn't exist in the table", () => {
+                return request(app)
+                .get("/api/users/2/found_plants?sort_by=not-a-column")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
             })
-        })
-        test("?order= 200: Responds with the given users found plants in the given order", () => {
-            return request(app)
-            .get("/api/users/2/found_plants?order_by=asc")
-            .expect(200)
-            .then(({body})=> {
-                expect(body.foundPlants).toHaveLength(7)
-                expect(body.foundPlants).toBeSortedBy('created_at', { descending: false })
+            test("?order= 200: Responds with the given users found plants in the given order", () => {
+                return request(app)
+                .get("/api/users/2/found_plants?order_by=asc")
+                .expect(200)
+                .then(({body})=> {
+                    expect(body.foundPlants).toHaveLength(7)
+                    expect(body.foundPlants).toBeSortedBy('created_at', { descending: false })
+                })
             })
-        })
-        test("?order= 400: Responds with 'Bad request' when the 'order' query is anything apart from 'asc' or 'desc'", () => {
-            return request(app)
-            .get("/api/users/2/found_plants?order_by=not-an-order")
-            .expect(400)
-            .then(({body}) => {
-                expect(body).toEqual({message: "Bad request"})
+            test("?order= 400: Responds with 'Bad Request' when the 'order' query is anything apart from 'asc' or 'desc'", () => {
+                return request(app)
+                .get("/api/users/2/found_plants?order_by=not-an-order")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
             })
-        })
-        test("?sort_by=&order_by= 200: Responds with the given users found plants ordered by the column of the given 'sort_by' query in the given order", () => {
-            return request(app)
-            .get("/api/users/2/found_plants?sort_by=location_name&order_by=asc")
-            .expect(200)
-            .then(({body}) => {
-                expect(body.foundPlants).toHaveLength(7)
-                expect(body.foundPlants).toBeSortedBy("location_name", { descending: false })
+            test("?sort_by=&order_by= 200: Responds with the given users found plants ordered by the column of the given 'sort_by' query in the given order", () => {
+                return request(app)
+                .get("/api/users/2/found_plants?sort_by=location_name&order_by=asc")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(7)
+                    expect(body.foundPlants).toBeSortedBy("location_name", { descending: false })
+                })
             })
-        })
-        describe("distance", () => {
+        })    
+        describe("sort_by_distance", () => {
             test("?sort_by_distance= 200: Responds with the given users found plants ordered by the distance", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
@@ -548,84 +550,126 @@ describe("/api/users/:user_id/found_plants", () => {
                     expect(body.foundPlants).toBeSortedBy("distanceInKm", { descending: false, coerce: true })
                 })
             })
-            test("?sort_by_distance= 400: Responds with 'Bad request' when the 'sort_by_distance is invalid", () => {
+            test("?sort_by_distance= 400: Responds with 'Bad Request' when the 'sort_by_distance is invalid", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=not-valid")
                 .set("lat", "53.79354")
                 .set("lon", "-1.75064")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Responds with 'Bad request' when the headers are missing", () => {
+            test("?sort_by_distance= 400: Responds with 'Bad Request' when the headers are missing", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Responds with 'Bad request' when the 'lon' header is missing", () => {
+            test("?sort_by_distance= 400: Responds with 'Bad Request' when the 'lon' header is missing", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .set("lat", "53.79354")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Responds with 'Bad request' when the 'lat' header is missing", () => {
+            test("?sort_by_distance= 400: Responds with 'Bad Request' when the 'lat' header is missing", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .set("lon", "-1.75064")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the latitude isn't valid", () => {
+            test("?sort_by_distance= 400: Reaponds with 'Bad Request' when the latitude isn't valid", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .set("lat", "not-a-valid-latitude")
                 .set("lon", "-1.75064")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the latitude isn't valid", () => {
+            test("?sort_by_distance= 400: Reaponds with 'Bad Request' when the latitude isn't valid", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .set("lat", "53.79354")
                 .set("lon", "not-a-valid-longitude")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the latitude is out of range", () => {
+            test("?sort_by_distance= 400: Reaponds with 'Bad Request' when the latitude is out of range", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .set("lat", "153.79354")
                 .set("lon", "-1.75064")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
-            test("?sort_by_distance= 400: Reaponds with 'Bad request' when the longitude is out of range", () => {
+            test("?sort_by_distance= 400: Reaponds with 'Bad Request' when the longitude is out of range", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?sort_by_distance=distanceInKm")
                 .set("lat", "53.79354")
                 .set("lon", "-199.75064")
                 .expect(400)
                 .then(({body}) => {
-                    expect(body).toEqual({message: "Bad request"})
+                    expect(body).toEqual({message: "Bad Request"})
                 })
             })
         })
-        
+        describe("filters", () => {
+            test("?plant_name= 200: Responds with the given users found plants of the same plant_name", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?plant_name=Plant%20Four")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(3)
+                    body.foundPlants.forEach((foundPlant) => {
+                        expect(foundPlant).toMatchObject({
+                            find_id: expect.any(Number),
+                            plant_id: 4,
+                            plant_name: "Plant Four",
+                            found_by: 3,
+                            photo_url: expect.any(String),
+                            location_name: expect.any(String),
+                            comment: expect.any(String),
+                            created_at: expect.any(String),
+                            location: expect.objectContaining({
+                                lat: expect.any(Number),
+                                lon: expect.any(Number),
+                            })
+                        })
+                    })
+                })
+            })
+            test("?plant_name= 400: Responds with 'Not Found' when the given plant name doesn't exist", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?plant_name=not-a-plant")
+                .expect(404)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Not Found"})
+                })
+            })
+            test("?plant_name= 200: Responds with an empty array if the given user doesn't have any plants of the given name", () => {
+                return request(app)
+                .get("/api/users/2/found_plants?plant_name=Plant%20One")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(0)
+                    expect(body.foundPlants).toEqual([])
+                })
+            })
+        })
     })
     describe("POST", () => {
         test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
