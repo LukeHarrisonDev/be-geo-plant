@@ -25,23 +25,25 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance, plantName) {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance, plantName, season = ["Spring", "Summer", "Autumn", "Winter"]) {
     
     const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
 
     const orderGreenlist = ["asc", "desc"]
 
+    // const seasonGreenlist = ["Spring", "Summer", "Autumn", "Winter"]
+
     if (!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
         return Promise.reject({ status: 400, message: "Bad Request" });
     }
 
-    let queryValues = [userId]
+    let queryValues = [userId, season]
 
-    let sqlQuery = `SELECT found_plants.*, plants.plant_name
+    let sqlQuery = `SELECT found_plants.*, plants.plant_name, plants.season
     FROM found_plants
     LEFT JOIN plants
     ON found_plants.plant_id = plants.plant_id
-    WHERE found_by = $1 `
+    WHERE found_by = $1 AND season && $2 `
 
     let plantCheck
     if(plantName) {
@@ -50,7 +52,7 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
             if(!result) {
                 return Promise.reject({ status: 404, message: "Not Found" })
             }
-            sqlQuery += 'AND plant_name = $2 '
+            sqlQuery += 'AND plant_name = $3 '
             queryValues.push(plantName)
         })
     } else {

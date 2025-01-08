@@ -29,7 +29,7 @@ module.exports = [
         about_plant: "Culpa quis pariatur eiusmod pariatur nisi proident exercitation consectetur exercitation. Cupidatat eiusmod velit nostrud esse Lorem aliquip adipisicing id ad. Et cupidatat exercitation incididunt ex culpa mollit velit dolor ad labore pariatur ad id. Et incididunt anim ut in sit reprehenderit non consequat.",
         plant_image_url: "https://images.unsplash.com/photo-1447875569765-2b3db822bec9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         rarity: 0,
-        season: ["Spring", "Summer", "Autumn"],
+        season: ["Summer", "Autumn"],
     },
     {
         plant_name: "Plant Six",
