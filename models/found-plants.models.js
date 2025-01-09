@@ -25,23 +25,25 @@ function fetchFoundPlantById(findId) {
     })
 }
 
-function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance, plantName, season = ["Spring", "Summer", "Autumn", "Winter"]) {
+function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc", position, sortByDistance, plantName, seasons = ["Spring", "Summer", "Autumn", "Winter"]) {
     
     const sortGreenlist = ["plant_id", "found_by", "location_name", "location", "photo_url", "comment", "created_at"]
-
     const orderGreenlist = ["asc", "desc"]
+    const seasonsGreenlist = ["Spring", "Summer", "Autumn", "Winter"]
 
-    // const seasonGreenlist = ["Spring", "Summer", "Autumn", "Winter"]
-
-    if (!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
-        return Promise.reject({ status: 400, message: "Bad Request" });
+    if(!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
+        return Promise.reject({ status: 400, message: "Bad Request" })
+    }
+    
+    if(!Array.isArray(seasons)) {
+        seasons = [seasons]
     }
 
-    if(!Array.isArray(season)) {
-        season = [season]
-    }
+    if(!seasons.some((timeOfYear) => seasonsGreenlist.includes(timeOfYear))) {
+        return Promise.reject({ status: 400, message: "Bad Request" })
+    }    
 
-    let queryValues = [userId, season]
+    let queryValues = [userId, seasons]
 
     let sqlQuery = `SELECT found_plants.*, plants.plant_name, plants.season
     FROM found_plants
