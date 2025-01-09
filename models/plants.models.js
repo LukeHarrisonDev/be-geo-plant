@@ -1,4 +1,5 @@
 const db = require("../db/connection")
+const { checkIfExists } = require("../db/seeds/utils")
 
 function fetchPlants() {
     let sqlQuery = `SELECT * FROM plants`
@@ -40,4 +41,23 @@ function fetchPlantById(plantId) {
     })
 }
 
-module.exports = { fetchPlants, fetchPlantById, addPlant }
+function fetchPlantsByUserId(userId) {
+    let sqlQuery = `SELECT plants.*, COUNT(found_plants.plant_id)::INTEGER AS find_amount
+    FROM plants
+    LEFT JOIN found_plants
+    ON plants.plant_id = found_plants.plant_id
+    AND found_plants.found_by = $1
+    GROUP BY plants.plant_id`
+    return db.query(sqlQuery, [userId])
+    .then(({ rows }) => {
+        return checkIfExists("users", "user_id", userId)
+        .then((result) => {
+            if(!result) {
+                return Promise.reject({ status: 404, message: "Not Found" })
+            }
+            return rows
+        })
+    })
+}
+
+module.exports = { fetchPlants, fetchPlantById, addPlant, fetchPlantsByUserId }
