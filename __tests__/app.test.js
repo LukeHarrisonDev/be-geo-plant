@@ -697,6 +697,37 @@ describe("/api/users/:user_id/found_plants", () => {
                     })
                 })
             })
+            test("?season= 200: Responds with the given users found plants that are typically found in either given season", () => {
+                const seasons = ["Winter", "Spring"]
+                return request(app)
+                .get("/api/users/3/found_plants?season=Winter&season=Spring&order_by=asc&sort_by=location_name")
+                .set("lat", "53.79354")
+                .set("lon", "-1.75064")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(5)
+                    expect(body.foundPlants).toBeSortedBy("location_name", { descending: false, coerce: true })
+                    body.foundPlants.forEach((foundPlant) => {
+                        expect(
+                            seasons.some((season) => foundPlant.season.includes(season))
+                        ).toBe(true)
+                        expect(foundPlant).toMatchObject({
+                            find_id: expect.any(Number),
+                            plant_id: expect.any(Number),
+                            plant_name: expect.any(String),
+                            found_by: 3,
+                            photo_url: expect.any(String),
+                            location_name: expect.any(String),
+                            comment: expect.any(String),
+                            created_at: expect.any(String),
+                            location: expect.objectContaining({
+                                lat: expect.any(Number),
+                                lon: expect.any(Number),
+                            })
+                        })
+                    })
+                })
+            })
             test("?season= 200: Responds with the given users found plants that are typically found in a single season", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?season=Spring")
