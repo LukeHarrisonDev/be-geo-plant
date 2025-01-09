@@ -722,6 +722,14 @@ describe("/api/users/:user_id/found_plants", () => {
                     })
                 })
             })
+            test("?season= 400: Responds with 'Bad Request' when the given season is invalid", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?season=not-a-season")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
+            })
         })
     })
     describe("POST", () => {
