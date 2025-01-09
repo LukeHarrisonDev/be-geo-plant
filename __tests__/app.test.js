@@ -811,3 +811,74 @@ describe("/api/users/:user_id/found_plants", () => {
         })
     })
 })
+describe("/api/users/:user_id/plants", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and all plants with added 'find_amount' value", () => {
+            return request(app)
+            .get("/api/users/3/plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.plants).toHaveLength(data.plantData.length)
+                body.plants.forEach((plant) => {
+                    expect(plant).toMatchObject({
+                        plant_id: expect.any(Number),
+                        plant_name: expect.any(String),
+                        about_plant: expect.any(String),
+                        plant_image_url: expect.any(String),
+                        rarity: expect.any(Number),
+                        find_amount: expect.any(Number),
+                    })
+                    const seasons = ["Winter", "Spring", "Summer", "Autumn"]
+                    expect(
+                        seasons.some((season) => plant.season.includes(season))
+                    ).toBe(true)
+                })
+            })
+        })
+        test("200: Responds with the specific 'find_amount' for each plant for the given user", () => {
+            const plantAmountsObject = {}
+            data.plantData.forEach((plant, index) => {
+                plantAmountsObject[index +1] = 0
+            })
+
+            data.foundPlantsData.forEach((foundPlant) => {
+                if(foundPlant.found_by === 3) {
+                    plantAmountsObject[foundPlant.plant_id] ++
+                }
+            })
+
+            const plantAmountsArray = []
+            for (let i in plantAmountsObject) {
+                plantAmountsArray.push({plant_id: +i, find_amount: plantAmountsObject[i]})
+            }
+
+            return request(app)
+            .get("/api/users/3/plants")
+            .expect(200)
+            .then(({body}) => {
+                body.plants.forEach((plant) => {
+                    const expected = plantAmountsArray.find((p) => p.plant_id === plant.plant_id)
+                    if(expected) {
+                        expect(plant.find_amount).toBe(expected.find_amount)
+                    }
+                })
+            })
+        })
+        test("400: Responds with a 400 status code and 'Bad Request' if the user_id is not a number", () => {
+            return request(app)
+            .get("/api/users/not-a-number/plants")
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Bad Request" })
+            })
+        })
+        test("404: Responds with a 404 status code and 'Not Found' if the user_id doesn't exist", () => {
+            return request(app)
+            .get("/api/users/999/plants")
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
+        })
+    })
+})
