@@ -811,3 +811,58 @@ describe("/api/users/:user_id/found_plants", () => {
         })
     })
 })
+describe("/api/users/:user_id/plants", () => {
+    describe("GET", () => {
+        test("200: Responds with a 200 status code and all plants with added 'find_amount' value", () => {
+            return request(app)
+            .get("/api/users/3/plants")
+            .expect(200)
+            .then(({body}) => {
+                expect(body.plants).toHaveLength(7)
+                body.plants.forEach((plant) => {
+                    expect(plant).toMatchObject({
+                        plant_id: expect.any(Number),
+                        plant_name: expect.any(String),
+                        about_plant: expect.any(String),
+                        plant_image_url: expect.any(String),
+                        rarity: expect.any(Number),
+                        find_amount: expect.any(Number),
+                    })
+                    const seasons = ["Winter", "Spring", "Summer", "Autumn"]
+                    expect(
+                        seasons.some((season) => plant.season.includes(season))
+                    ).toBe(true)
+                })
+            })
+        })
+        test("200: Responds with the specific 'find_amount' for each plant for the given user", () => {
+            const plantAmountsObject = {}
+            data.plantData.forEach((plant, index) => {
+                plantAmountsObject[index +1] = 0
+            })
+
+            data.foundPlantsData.forEach((foundPlant) => {
+                if(foundPlant.found_by === 3) {
+                    plantAmountsObject[foundPlant.plant_id] ++
+                }
+            })
+
+            const plantAmountsArray = []
+            for (let i in plantAmountsObject) {
+                plantAmountsArray.push({plant_id: +i, find_amount: plantAmountsObject[i]})
+            }
+
+            return request(app)
+            .get("/api/users/3/plants")
+            .expect(200)
+            .then(({body}) => {
+                body.plants.forEach((plant) => {
+                    const expected = plantAmountsArray.find((p) => p.plant_id === plant.plant_id)
+                    if(expected) {
+                        expect(plant.find_amount).toBe(expected.find_amount)
+                    }
+                })
+            })
+        })
+    })
+})

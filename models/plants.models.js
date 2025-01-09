@@ -40,4 +40,17 @@ function fetchPlantById(plantId) {
     })
 }
 
-module.exports = { fetchPlants, fetchPlantById, addPlant }
+function fetchPlantsByUserId(userId) {
+    let sqlQuery = `SELECT plants.*, COUNT(found_plants.plant_id)::INTEGER AS find_amount
+    FROM plants
+    LEFT JOIN found_plants
+        ON plants.plant_id = found_plants.plant_id
+        AND found_plants.found_by = $1
+    GROUP BY plants.plant_id`
+    return db.query(sqlQuery, [userId])
+    .then(({ rows }) => {
+        return rows
+    })
+}
+
+module.exports = { fetchPlants, fetchPlantById, addPlant, fetchPlantsByUserId }

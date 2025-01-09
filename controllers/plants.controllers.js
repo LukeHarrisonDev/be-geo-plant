@@ -1,4 +1,4 @@
-const { fetchPlants, fetchPlantById, addPlant } = require("../models/plants.models")
+const { fetchPlants, fetchPlantById, addPlant, fetchPlantsByUserId } = require("../models/plants.models")
 
 function getPlants(request, response, next) {
     fetchPlants()
@@ -32,4 +32,12 @@ function getPlantById(request, response, next) {
     })
 }
 
-module.exports = { getPlants, getPlantById, postPlant }
+function getPlantsByUserId(request, response, next) {
+    const { user_id } = request.params
+    fetchPlantsByUserId(user_id)
+    .then((plants) => {
+        response.status(200).send({ plants })
+    })
+}
+
+module.exports = { getPlants, getPlantById, postPlant, getPlantsByUserId }
