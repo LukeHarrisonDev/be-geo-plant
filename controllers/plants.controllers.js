@@ -38,6 +38,9 @@ function getPlantsByUserId(request, response, next) {
     .then((plants) => {
         response.status(200).send({ plants })
     })
+    .catch((error) => {
+        next(error)
+    })
 }
 
 module.exports = { getPlants, getPlantById, postPlant, getPlantsByUserId }
