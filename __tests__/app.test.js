@@ -669,6 +669,67 @@ describe("/api/users/:user_id/found_plants", () => {
                     expect(body.foundPlants).toEqual([])
                 })
             })
+            test("?season= 200: Responds with the given users found plants that are typically found in either given season", () => {
+                const seasons = ["Winter", "Spring"]
+                return request(app)
+                .get("/api/users/3/found_plants?season=Winter&season=Spring")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(5)
+                    body.foundPlants.forEach((foundPlant) => {
+                        expect(
+                            seasons.some((season) => foundPlant.season.includes(season))
+                        ).toBe(true)
+                        expect(foundPlant).toMatchObject({
+                            find_id: expect.any(Number),
+                            plant_id: expect.any(Number),
+                            plant_name: expect.any(String),
+                            found_by: 3,
+                            photo_url: expect.any(String),
+                            location_name: expect.any(String),
+                            comment: expect.any(String),
+                            created_at: expect.any(String),
+                            location: expect.objectContaining({
+                                lat: expect.any(Number),
+                                lon: expect.any(Number),
+                            })
+                        })
+                    })
+                })
+            })
+            test("?season= 200: Responds with the given users found plants that are typically found in a single season", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?season=Spring")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.foundPlants).toHaveLength(2)
+                    body.foundPlants.forEach((foundPlant) => {
+                        expect(foundPlant.season).toContain("Spring")
+                        expect(foundPlant).toMatchObject({
+                            find_id: expect.any(Number),
+                            plant_id: expect.any(Number),
+                            plant_name: expect.any(String),
+                            found_by: 3,
+                            photo_url: expect.any(String),
+                            location_name: expect.any(String),
+                            comment: expect.any(String),
+                            created_at: expect.any(String),
+                            location: expect.objectContaining({
+                                lat: expect.any(Number),
+                                lon: expect.any(Number),
+                            })
+                        })
+                    })
+                })
+            })
+            test("?season= 400: Responds with 'Bad Request' when the given season is invalid", () => {
+                return request(app)
+                .get("/api/users/3/found_plants?season=not-a-season")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
+            })
         })
     })
     describe("POST", () => {
