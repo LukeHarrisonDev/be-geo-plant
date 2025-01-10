@@ -1008,6 +1008,29 @@ describe("/api/users/:user_id/plants", () => {
                     expect(body).toEqual({message: "Bad Request"})
                 })
             })
+            test("?sort_by=&order_by=&season= 200: Responds with all the plants for the given user with multiple queries", () => {
+                const seasons = ["Summer", "Autumn", "Winter"]
+                return request(app)
+                .get("/api/users/3/plants?sort_by=plant_id&order_by=desc&season=Winter&season=Summer&season=Autumn")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(6)
+                    expect(body.plants).toBeSortedBy("plant_id", { descending: true })
+                    body.plants.forEach((plant) => {
+                        expect(
+                            seasons.some((season) => plant.season.includes(season))
+                        ).toBe(true)
+                        expect(plant).toMatchObject({
+                            plant_id: expect.any(Number),
+                            plant_name: expect.any(String),
+                            about_plant: expect.any(String),
+                            plant_image_url: expect.any(String),
+                            rarity: expect.any(Number),
+                            find_amount: expect.any(Number),
+                        })
+                    })
+                })
+            })
         })
     })
 })
