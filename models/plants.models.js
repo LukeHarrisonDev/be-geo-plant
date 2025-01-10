@@ -43,6 +43,12 @@ function fetchPlantById(plantId) {
 
 function fetchPlantsByUserId(userId, sortBy = "plant_id") {
 
+    const sortGreenlist = ["plant_id", "plant_name", "about_plant", "plant_image_url", "rarity", "find_amount"]
+
+    if(!sortGreenlist.includes(sortBy)) {
+        return Promise.reject({ status: 400, message: "Bad Request" })
+    }
+
     let sqlQuery = `SELECT plants.*, COUNT(found_plants.plant_id)::INTEGER AS find_amount
     FROM plants
     LEFT JOIN found_plants
