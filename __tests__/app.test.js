@@ -912,4 +912,51 @@ describe("/api/users/:user_id/plants", () => {
             })
         })
     })
+    describe("GET Queries", () => {
+        describe("sort_by & order", () => {
+            test("?sort_by= 200: Responds with all plants for the given user ordered by the given column", () => {
+                return request(app)
+                .get("/api/users/3/plants?sort_by=find_amount")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(7)
+                    expect(body.plants).toBeSortedBy("find_amount", { descending: false })
+                })
+            })
+            test("sort_by= 400: Responds with 'Bad Request' when the given column name doesn't exist in the table", () => {
+                return request(app)
+                .get("/api/users/3/plants?sort_by=not-a-column")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
+            })
+            test("order_by= 200: Responds with all the plants for the given user in the given order", () => {
+                return request(app)
+                .get("/api/users/3/plants?order_by=desc")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(7)
+                    expect(body.plants).toBeSortedBy("plant_name", { descending: true })
+                })
+            })
+            test("order_by= 400: Responds with 'Bad Request' when the 'order' query is anything apart from 'asc' or 'desc'", () => {
+                return request(app)
+                .get("/api/users/3/plants?order_by=not-an-order")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
+            })
+            test("?sort_by=&order_by= 200: Responds with all the plants for the given user ordered by the column of the given 'sort_by' query in the given order", () => {
+                return request(app)
+                .get("/api/users/3/plants?sort_by=rarity&order_by=desc")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(7)
+                    expect(body.plants).toBeSortedBy("rarity", { descending: true })
+                })
+            })
+        })
+    })
 })
