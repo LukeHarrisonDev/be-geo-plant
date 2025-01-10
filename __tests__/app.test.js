@@ -912,4 +912,17 @@ describe("/api/users/:user_id/plants", () => {
             })
         })
     })
+    describe("GET Queries", () => {
+        describe("sort_by & order", () => {
+            test("?sort_by= 200: Responds with all plants for the given user ordered by the given column", () => {
+                return request(app)
+                .get("/api/users/3/plants?sort_by=find_amount")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(7)
+                    expect(body.plants).toBeSortedBy("find_amount", { descending: true })
+                })
+            })
+        })
+    })
 })
