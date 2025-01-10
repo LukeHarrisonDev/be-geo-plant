@@ -104,7 +104,7 @@
     },
     "GET /api/users/:user_id/plants": {
         "description": "Serves the given user a list of plants, and how many of each plant they have found",
-        "queries": [],
+        "queries": ["sort_by", "order_by", "season"],
         "exampleResponse": {
             "plants":[
                 {
