@@ -41,11 +41,13 @@ function fetchPlantById(plantId) {
     })
 }
 
-function fetchPlantsByUserId(userId, sortBy = "plant_name", orderBy) {
+function fetchPlantsByUserId(userId, sortBy = "plant_name", orderBy = "asc") {
 
     const sortGreenlist = ["plant_id", "plant_name", "about_plant", "plant_image_url", "rarity", "find_amount"]
 
-    if(!sortGreenlist.includes(sortBy)) {
+    const orderGreenlist = ["asc", "desc"]
+
+    if(!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
         return Promise.reject({ status: 400, message: "Bad Request" })
     }
 
@@ -55,16 +57,8 @@ function fetchPlantsByUserId(userId, sortBy = "plant_name", orderBy) {
     ON plants.plant_id = found_plants.plant_id
     AND found_plants.found_by = $1
     GROUP BY plants.plant_id 
-    ORDER BY ${sortBy} `
-
-    if(orderBy) {
-        sqlQuery += `${orderBy.toUpperCase()} `
-    } else if (sortBy === "find_amount") {
-        sqlQuery += `DESC`
-    } else {
-        sqlQuery += `ASC`
-    }
-
+    ORDER BY ${sortBy} ${orderBy.toUpperCase()} `
+    
     return db.query(sqlQuery, [userId])
     .then(({ rows }) => {
         return checkIfExists("users", "user_id", userId)
