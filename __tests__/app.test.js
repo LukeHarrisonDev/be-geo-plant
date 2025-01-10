@@ -697,7 +697,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     })
                 })
             })
-            test("?season= 200: Responds with the given users found plants that are typically found in either given season", () => {
+            test("?season=&order_by=&sort_by= 200: Responds with the given users found plants with multiple queries", () => {
                 const seasons = ["Winter", "Spring"]
                 return request(app)
                 .get("/api/users/3/found_plants?season=Winter&season=Spring&order_by=asc&sort_by=location_name")
@@ -728,7 +728,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     })
                 })
             })
-            test("?season= 200: Responds with the given users found plants that are typically found in a single season", () => {
+            test("?season= 200: Responds with the given users found plants that are typically found in a single given season", () => {
                 return request(app)
                 .get("/api/users/3/found_plants?season=Spring")
                 .expect(200)
@@ -955,6 +955,49 @@ describe("/api/users/:user_id/plants", () => {
                 .then(({body}) => {
                     expect(body.plants).toHaveLength(7)
                     expect(body.plants).toBeSortedBy("rarity", { descending: true })
+                })
+            })
+        })
+        describe("filters", () => {
+            test("?season= 200: Responds with all the plants for the given user that are typically found in either given season", () => {
+                const seasons = ["Summer", "Spring"]
+                return request(app)
+                .get("/api/users/3/plants?season=Summer&season=Spring")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(5)
+                    body.plants.forEach((plant) => {
+                        expect(
+                            seasons.some((season) => plant.season.includes(season))
+                        ).toBe(true)
+                        expect(plant).toMatchObject({
+                            plant_id: expect.any(Number),
+                            plant_name: expect.any(String),
+                            about_plant: expect.any(String),
+                            plant_image_url: expect.any(String),
+                            rarity: expect.any(Number),
+                            find_amount: expect.any(Number),
+                        })
+                    })
+                })
+            })
+            test("?season= 200: Responds with all the plants for the given user that are typically found in a single given season", () => {
+                return request(app)
+                .get("/api/users/3/plants?season=Autumn")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(4)
+                    body.plants.forEach((plant) => {
+                        expect(plant.season).toContain("Autumn")
+                        expect(plant).toMatchObject({
+                            plant_id: expect.any(Number),
+                            plant_name: expect.any(String),
+                            about_plant: expect.any(String),
+                            plant_image_url: expect.any(String),
+                            rarity: expect.any(Number),
+                            find_amount: expect.any(Number),
+                        })
+                    })
                 })
             })
         })
