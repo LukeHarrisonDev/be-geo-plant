@@ -45,6 +45,7 @@ function fetchPlantsByUserId(userId, sortBy = "plant_name", orderBy = "asc", sea
 
     const sortGreenlist = ["plant_id", "plant_name", "about_plant", "plant_image_url", "rarity", "find_amount"]
     const orderGreenlist = ["asc", "desc"]
+    const seasonsGreenlist = ["Spring", "Summer", "Autumn", "Winter"]
 
     if(!sortGreenlist.includes(sortBy) || !orderGreenlist.includes(orderBy)) {
         return Promise.reject({ status: 400, message: "Bad Request" })
@@ -53,6 +54,10 @@ function fetchPlantsByUserId(userId, sortBy = "plant_name", orderBy = "asc", sea
     if(!Array.isArray(seasons)) {
         seasons = [seasons]
     }
+
+    if(!seasons.some((timeOfYear) => seasonsGreenlist.includes(timeOfYear))) {
+        return Promise.reject({ status: 400, message: "Bad Request" })
+    }    
 
     let queryValues = [userId, seasons]
 
