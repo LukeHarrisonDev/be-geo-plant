@@ -34,7 +34,8 @@ function getPlantById(request, response, next) {
 
 function getPlantsByUserId(request, response, next) {
     const { user_id } = request.params
-    fetchPlantsByUserId(user_id)
+    const { sort_by } = request.query
+    fetchPlantsByUserId(user_id, sort_by)
     .then((plants) => {
         response.status(200).send({ plants })
     })
