@@ -948,6 +948,15 @@ describe("/api/users/:user_id/plants", () => {
                     expect(body).toEqual({message: "Bad Request"})
                 })
             })
+            test("?sort_by=&order_by= 200: Responds with all the plants for the given user ordered by the column of the given 'sort_by' query in the given order", () => {
+                return request(app)
+                .get("/api/users/3/plants?sort_by=rarity&order_by=desc")
+                .expect(200)
+                .then(({body}) => {
+                    expect(body.plants).toHaveLength(7)
+                    expect(body.plants).toBeSortedBy("rarity", { descending: true })
+                })
+            })
         })
     })
 })
