@@ -923,6 +923,14 @@ describe("/api/users/:user_id/plants", () => {
                     expect(body.plants).toBeSortedBy("find_amount", { descending: true })
                 })
             })
+            test("sort_by= 400: Responds with 'Bad Request' when the given column name doesn't exist in the table", () => {
+                return request(app)
+                .get("/api/users/3/plants?sort_by=not-a-column")
+                .expect(400)
+                .then(({body}) => {
+                    expect(body).toEqual({message: "Bad Request"})
+                })
+            })
         })
     })
 })
