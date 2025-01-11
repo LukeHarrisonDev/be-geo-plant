@@ -384,7 +384,7 @@ describe("/api/found_plants/:find_id", () => {
                     location_name: 'Place Seven',
                     location: {lat: 51.97567141748108, lon: -2.1932002831539124},
                     photo_url: "https://images.unsplash.com/photo-1538998073820-4dfa76300194?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    comment: "Found, What a nice Plant",
+                    comment: "Found, what a lovely plant!",
                     created_at: expect.any(String)
                 })
             })
@@ -782,7 +782,7 @@ describe("/api/users/:user_id/found_plants", () => {
                     photo_url: "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
                     location_name: 'Place Fifteen',
                     location: {lat: 53.758968939609424, lon: -1.2222638173901648},
-                    comment: "Found, What a nice Plant",
+                    comment: "Found, what a lovely plant!",
                     created_at: expect.any(String)
                 })
             })

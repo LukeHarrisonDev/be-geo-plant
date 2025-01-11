@@ -45,7 +45,7 @@ function seed ({userData, plantData, foundPlantsData}) {
             photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
             location_name VARCHAR (50) NOT NULL,
             location JSONB NOT NULL,
-            comment VARCHAR (300) DEFAULT 'Found, What a nice Plant',
+            comment VARCHAR (300) DEFAULT 'Found, what a lovely plant!',
             created_at TIMESTAMP DEFAULT NOW()
             );`
         )
@@ -99,7 +99,7 @@ function seed ({userData, plantData, foundPlantsData}) {
                         location_name,
                         JSON.stringify(location),
                         photo_url || "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
-                        comment || 'Found, What a nice Plant',
+                        comment || 'Found, what a lovely plant!',
                         created_at || new Date()
                     ]
                 })
