@@ -17,4 +17,6 @@ if (ENV === 'production') {
   config.ssl = { rejectUnauthorized: false }
 }
 
+console.log('Attempting DB connection with config:', config);
+
 module.exports = new Pool(config);
