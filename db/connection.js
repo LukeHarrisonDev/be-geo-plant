@@ -14,9 +14,6 @@ const config = {};
 if (ENV === 'production') {
   config.connectionString = process.env.DATABASE_URL;
   config.max = 2;
-  config.ssl = { rejectUnauthorized: false }
 }
-
-console.log('Attempting DB connection with config:', config);
 
 module.exports = new Pool(config);
