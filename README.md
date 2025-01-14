@@ -1,4 +1,4 @@
-# Northcoders News API
+# Geo Plant API
 
 ### Hosted API Link
 
