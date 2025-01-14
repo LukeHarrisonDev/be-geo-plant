@@ -11,6 +11,7 @@ I had an idea to create a mobile app that allows people to exercise while taking
 
 ### Setup
 > Clone the Repo
+
 Copy the following link, (Or copy the link from the GitHub Repo page) and use "git clone [link]" in the the terminal
 [https://github.com/LukeHarrisonDev/be-geo-plant](https://github.com/LukeHarrisonDev/be-geo-plant)
 
@@ -25,7 +26,7 @@ Use the following instructions to add the .env files which will allow you to cre
 
 navigate into the folder with 'cd be-geo-plant'
 
-> Install the dependancies with 'npm install'
+> Install dependancies
 
 Run 'npm install' to install the dependancies
 
