@@ -840,8 +840,12 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body).toEqual({ message: "Not Found" })
             })
         })
+        // test("201: Responds with a 201 status code when the client sends a photo with the find", () => {
+            
+        // })
     })
 })
+
 describe("/api/users/:user_id/plants", () => {
     describe("GET", () => {
         test("200: Responds with a 200 status code and all plants with added 'find_amount' value", () => {
