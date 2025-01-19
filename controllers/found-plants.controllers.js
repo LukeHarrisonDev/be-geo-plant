@@ -22,6 +22,7 @@ function getFoundPlantById(request, response, next) {
 }
 
 function getFoundPlantsByUserId(request, response, next) {
+
     const { user_id } = request.params
     const { sort_by, order_by, sort_by_distance, plant_name, season } = request.query
     const position = {lat: request.headers.lat, lon: request.headers.lon}
@@ -37,7 +38,8 @@ function getFoundPlantsByUserId(request, response, next) {
 function postFoundPlant(request, response, next) {
     const { user_id } = request.params
     const newFoundPlant = request.body
-    addFoundPlant(user_id, newFoundPlant)
+    const newPhoto = request.file
+    addFoundPlant(user_id, newFoundPlant, newPhoto)
     .then((foundPlant) => {
         response.status(201).send({ foundPlant })
     })

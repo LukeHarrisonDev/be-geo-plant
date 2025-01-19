@@ -27,7 +27,7 @@
         "description": "Adds a new User and serves that User",
         "queries": [],
         "propertiesRequired": ["username(String)", "first_name(String)", "last_name(String)", "email(String)", "password(String)"],
-        "optionProperties": ["image_url(String)", "admin(Boolean)#"],
+        "optionProperties": ["image_url(String)", "admin(Boolean)"],
         "exampleResponse": {
             "user":
             {

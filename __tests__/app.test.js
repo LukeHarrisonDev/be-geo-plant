@@ -3,6 +3,7 @@ const seed = require("../db/seeds/seed")
 const data = require("../db/data/test-data")
 const db = require("../db/connection")
 const endpoints = require("../endpoints.json")
+const path = require('path');
 
 const request = require("supertest")
 
@@ -840,9 +841,14 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body).toEqual({ message: "Not Found" })
             })
         })
-        // test("201: Responds with a 201 status code when the client sends a photo with the find", () => {
-            
-        // })
+        test.only("201: Responds with a 201 status code when the client sends a photo with the find", () => {
+            return request(app)
+            .post("/api/users/4/found_plants")
+            .field("plant_id", 3)
+            .field("location_name", "Place Fifteen")
+            .attach("photo_file", path.join(__dirname, "../db/data/images/IMG_2230.HEIC"))
+            .expect(201)
+        })
     })
 })
 
