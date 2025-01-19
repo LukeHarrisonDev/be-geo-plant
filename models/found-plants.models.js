@@ -1,3 +1,4 @@
+const exiftool = require("exiftool-vendored").exiftool
 const Distance = require("geo-distance")
 const db = require("../db/connection")
 const { checkIfExists } = require("../db/seeds/utils")
@@ -108,24 +109,39 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
     })
 }
 
-function addFoundPlant(userId, newFoundPlant) {
+function addFoundPlant(userId, newFoundPlant, newPhoto) {
+    
+    const newPhotoPath = newPhoto.path
 
-    const columns = Object.keys(newFoundPlant)
-    const values = Object.values(newFoundPlant)
-    columns.unshift("found_by")
-    values.unshift(+userId)
+    console.log("./" + newPhotoPath, "<<<< path")
 
-    const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
-
-    let sqlQuery = `INSERT INTO found_plants (${columns})
-    VALUES (${placeholders})
-    RETURNING *`
-    return db.query(sqlQuery, values)
-    .then(({ rows }) => {
-        if (rows.length === 0) {
-            return Promise.reject({ status: 404, message: "Not Found" })
-        }
-        return rows[0]
+    return exiftool.read(newPhotoPath)
+    .then((metaData) => {
+        const location = {lat: metaData.GPSLatitude, lon: metaData.GPSLongitude}
+        newFoundPlant.location = location
+        console.log(newFoundPlant, "<<<< NFP")
+        
+        const columns = Object.keys(newFoundPlant)
+        const values = Object.values(newFoundPlant)
+        columns.unshift("found_by")
+        values.unshift(+userId)
+        
+        const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
+        
+        let sqlQuery = `INSERT INTO found_plants (${columns})
+        VALUES (${placeholders})
+        RETURNING *`
+        return db.query(sqlQuery, values)
+        .then(({ rows }) => {
+            console.log(rows, "<<< Rows")
+            if (rows.length === 0) {
+                return Promise.reject({ status: 404, message: "Not Found" })
+            }
+            return rows[0]
+        })
+    })
+    .then(() => {
+        exiftool.end()
     })
 }
 
