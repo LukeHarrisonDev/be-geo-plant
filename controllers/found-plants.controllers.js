@@ -1,3 +1,5 @@
+const exiftool = require("exiftool-vendored").exiftool
+
 const { fetchAllFoundPlants, fetchFoundPlantById, fetchFoundPlantsByUserId, addFoundPlant, removeFoundPlantById, } = require("../models/found-plants.models")
 
 function getAllFoundPlants(request, response, next) {
@@ -38,7 +40,7 @@ function getFoundPlantsByUserId(request, response, next) {
 function postFoundPlant(request, response, next) {
     const { user_id } = request.params
     const newFoundPlant = request.body
-    const newPhoto = request.file
+    const newPhoto = request.files
     addFoundPlant(user_id, newFoundPlant, newPhoto)
     .then((foundPlant) => {
         response.status(201).send({ foundPlant })
