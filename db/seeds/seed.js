@@ -46,7 +46,8 @@ function seed ({userData, plantData, foundPlantsData}) {
             location_name VARCHAR (50) NOT NULL,
             location JSONB NOT NULL,
             comment VARCHAR (300) DEFAULT 'Found, what a lovely plant!',
-            created_at TIMESTAMP DEFAULT NOW()
+            created_at TIMESTAMP DEFAULT NOW(),
+            photo_cloud_names TEXT[]
             );`
         )
     })
@@ -90,9 +91,8 @@ function seed ({userData, plantData, foundPlantsData}) {
             const formattedFoundPlants = foundPlantsData.map(convertTimestampToDate)
             const insertFoundPlantsData = format(
                 `INSERT INTO found_plants (plant_id,
-                found_by, location_name, location, photo_url, comment, created_at
-                ) VALUES %L;`,
-                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_url, comment, created_at }) => {
+                found_by, location_name, location, photo_url, comment, created_at, photo_cloud_names) VALUES %L;`,
+                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_url, comment, created_at, photo_cloud_names }) => {
                     return [
                         plant_id,
                         found_by,
@@ -100,7 +100,8 @@ function seed ({userData, plantData, foundPlantsData}) {
                         JSON.stringify(location),
                         photo_url || "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
                         comment || 'Found, what a lovely plant!',
-                        created_at || new Date()
+                        created_at || new Date(),
+                        `{${photo_cloud_names}}`
                     ]
                 })
             )
