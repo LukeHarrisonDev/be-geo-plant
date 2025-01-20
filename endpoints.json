@@ -26,6 +26,8 @@
     "POST /api/users": {
         "description": "Adds a new User and serves that User",
         "queries": [],
+        "propertiesRequired": ["username(String)", "first_name(String)", "last_name(String)", "email(String)", "password(String)"],
+        "optionProperties": ["image_url(String)", "admin(Boolean)"],
         "exampleResponse": {
             "user":
             {
@@ -88,6 +90,8 @@
     "POST /api/users/:user_id/found_plants": {
         "description": "Adds a new Found Plant and serves that Found Plant",
         "queries": [],
+        "propertiesRequired": ["plant_id(Number)", "place_name(String)", "location(Object = {lat: (Number), lon: (Number)})"],
+        "optionProperties": ["photo_url(String)", "comment(String)"],
         "exampleResponse": {
             "foundPlant":
             {
