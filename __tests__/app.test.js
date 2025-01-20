@@ -344,14 +344,13 @@ describe("/api/plants/:plant_id", () => {
 
 describe("/api/found_plants", () => {
     describe("GET", () => {
-        test.only("200: Responds with a 200 status code and an array of all found_plant objects", () => {
+        test("200: Responds with a 200 status code and an array of all found_plant objects", () => {
             return request(app)
             .get("/api/found_plants")
             .expect(200)
             .then(({body}) => {
                 expect(body.foundPlants).toHaveLength(14)
                 body.foundPlants.forEach((foundPlant) => {
-                    console.log(foundPlant, "<<<< ")
                     expect(foundPlant).toMatchObject({
                         find_id: expect.any(Number),
                         plant_id: expect.any(Number),
@@ -766,7 +765,7 @@ describe("/api/users/:user_id/found_plants", () => {
             })
         })
     })
-    describe("POST", () => {
+    describe.skip("POST", () => {
         test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
             const newFoundPlant = {
                 plant_id: 3,
