@@ -1,3 +1,5 @@
+const exiftool = require("exiftool-vendored").exiftool
+
 const { fetchAllFoundPlants, fetchFoundPlantById, fetchFoundPlantsByUserId, addFoundPlant, removeFoundPlantById, } = require("../models/found-plants.models")
 
 function getAllFoundPlants(request, response, next) {

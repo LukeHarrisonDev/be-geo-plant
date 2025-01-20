@@ -3,11 +3,13 @@ const Distance = require("geo-distance")
 const db = require("../db/connection")
 const { checkIfExists } = require("../db/seeds/utils")
 const cloudinary = require("cloudinary").v2
+const fs = require('fs').promises;
 
 require('dotenv').config()
 
 cloudinary.config({
     cloud_name: "dcm85bncm",
+    secure: true,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
@@ -128,36 +130,38 @@ function addFoundPlant(userId, newFoundPlant, newPhoto) {
         const photoDate = metaData.GPSDateTime.rawValue
         const formattedDate = `${photoDate.slice(0, 4)}-${photoDate.slice(5, 7)}-${photoDate.slice(8, 10)}T${photoDate.slice(11, 22)}0Z`
 
+        exiftool.end()
+
         newFoundPlant.location = location
         newFoundPlant.created_at = formattedDate
-        
-        return cloudinary.uploader.upload(newPhotoPath)
+
+            return cloudinary.uploader.upload(newPhotoPath)
+
     })
-    .then((results) => {
+    .then((photoCloudData) => {
+        
+        const cloudName = photoCloudData.display_name
+        newFoundPlant.photo_cloud_names = [`${cloudName}`]
+
+        fs.unlink(newPhotoPath)
+
         const columns = Object.keys(newFoundPlant)
         const values = Object.values(newFoundPlant)
         columns.unshift("found_by")
         values.unshift(+userId)
         
         const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
-        
+
         let sqlQuery = `INSERT INTO found_plants (${columns})
         VALUES (${placeholders})
         RETURNING *`
         return db.query(sqlQuery, values)
     })
     .then(({ rows }) => {
-        console.log(rows, "<<< Rows")
         if (rows.length === 0) {
             return Promise.reject({ status: 404, message: "Not Found" })
         }
         return rows[0]
-    })
-    .catch((error) => {
-        console.log(error, "<<< Error in Model")
-    })
-    .then(() => {
-        exiftool.end()
     })
 }
 
