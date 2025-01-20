@@ -2,6 +2,17 @@ const exiftool = require("exiftool-vendored").exiftool
 const Distance = require("geo-distance")
 const db = require("../db/connection")
 const { checkIfExists } = require("../db/seeds/utils")
+const cloudinary = require("cloudinary").v2
+
+require('dotenv').config()
+
+cloudinary.config({
+    cloud_name: "dcm85bncm",
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
+// console.log(cloudinary, "<<< UEFGHIDKFH")
 
 function fetchAllFoundPlants() {
     let sqlQuery = `SELECT * FROM found_plants`
@@ -110,17 +121,19 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
 }
 
 function addFoundPlant(userId, newFoundPlant, newPhoto) {
-    
+        
     const newPhotoPath = newPhoto.path
-
-    console.log("./" + newPhotoPath, "<<<< path")
 
     return exiftool.read(newPhotoPath)
     .then((metaData) => {
         const location = {lat: metaData.GPSLatitude, lon: metaData.GPSLongitude}
         newFoundPlant.location = location
-        console.log(newFoundPlant, "<<<< NFP")
-        
+        const photoDate = metaData.GPSDateTime.rawValue
+        const formattedDate = `${photoDate.slice(0, 4)}-${photoDate.slice(5, 7)}-${photoDate.slice(8, 10)}T${photoDate.slice(11, 22)}0Z`
+        newFoundPlant.created_at = formattedDate
+        return cloudinary.uploader.upload(newPhotoPath)
+    })
+    .then((results) => {
         const columns = Object.keys(newFoundPlant)
         const values = Object.values(newFoundPlant)
         columns.unshift("found_by")
@@ -132,13 +145,16 @@ function addFoundPlant(userId, newFoundPlant, newPhoto) {
         VALUES (${placeholders})
         RETURNING *`
         return db.query(sqlQuery, values)
-        .then(({ rows }) => {
-            console.log(rows, "<<< Rows")
-            if (rows.length === 0) {
-                return Promise.reject({ status: 404, message: "Not Found" })
-            }
-            return rows[0]
-        })
+    })
+    .then(({ rows }) => {
+        console.log(rows, "<<< Rows")
+        if (rows.length === 0) {
+            return Promise.reject({ status: 404, message: "Not Found" })
+        }
+        return rows[0]
+    })
+    .catch((error) => {
+        console.log(error, "<<< Error in Model")
     })
     .then(() => {
         exiftool.end()
