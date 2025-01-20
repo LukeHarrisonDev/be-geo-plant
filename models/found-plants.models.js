@@ -12,8 +12,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-// console.log(cloudinary, "<<< UEFGHIDKFH")
-
 function fetchAllFoundPlants() {
     let sqlQuery = `SELECT * FROM found_plants`
     return db.query(sqlQuery)
@@ -122,15 +120,17 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
 
 function addFoundPlant(userId, newFoundPlant, newPhoto) {
         
-    const newPhotoPath = newPhoto.path
+    const newPhotoPath = newPhoto[0].path
 
     return exiftool.read(newPhotoPath)
     .then((metaData) => {
         const location = {lat: metaData.GPSLatitude, lon: metaData.GPSLongitude}
-        newFoundPlant.location = location
         const photoDate = metaData.GPSDateTime.rawValue
         const formattedDate = `${photoDate.slice(0, 4)}-${photoDate.slice(5, 7)}-${photoDate.slice(8, 10)}T${photoDate.slice(11, 22)}0Z`
+
+        newFoundPlant.location = location
         newFoundPlant.created_at = formattedDate
+        
         return cloudinary.uploader.upload(newPhotoPath)
     })
     .then((results) => {

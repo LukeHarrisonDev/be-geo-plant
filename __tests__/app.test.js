@@ -344,13 +344,14 @@ describe("/api/plants/:plant_id", () => {
 
 describe("/api/found_plants", () => {
     describe("GET", () => {
-        test("200: Responds with a 200 status code and an array of all found_plant objects", () => {
+        test.only("200: Responds with a 200 status code and an array of all found_plant objects", () => {
             return request(app)
             .get("/api/found_plants")
             .expect(200)
             .then(({body}) => {
                 expect(body.foundPlants).toHaveLength(14)
                 body.foundPlants.forEach((foundPlant) => {
+                    console.log(foundPlant, "<<<< ")
                     expect(foundPlant).toMatchObject({
                         find_id: expect.any(Number),
                         plant_id: expect.any(Number),
@@ -364,6 +365,7 @@ describe("/api/found_plants", () => {
                             lon: expect.any(Number),
                         })
                     })
+                    expect(Array.isArray(foundPlant.photo_cloud_names)).toBe(true)
                 })
             })
         })
@@ -841,12 +843,12 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body).toEqual({ message: "Not Found" })
             })
         })
-        test.only("201: Responds with a 201 status code when the client sends a photo with the find", () => {
+        test("201: Responds with a 201 status code when the client sends a photo with the find", () => {
             return request(app)
             .post("/api/users/4/found_plants")
             .field("plant_id", 3)
             .field("location_name", "Place Fifteen")
-            .attach("photo_file", path.join(__dirname, "../db/data/images/IMG_2230.HEIC"))
+            .attach("photo_files", path.join(__dirname, "../db/data/images/IMG_2230.HEIC"))
             .expect(201)
         })
     })

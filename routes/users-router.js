@@ -14,7 +14,7 @@ usersRouter.get("/:user_id", getUserById)
 usersRouter.delete("/:user_id", deleteUserById)
 
 usersRouter.get("/:user_id/found_plants", getFoundPlantsByUserId)
-usersRouter.post("/:user_id/found_plants", upload.single('photo_file'), postFoundPlant)
+usersRouter.post("/:user_id/found_plants", upload.array('photo_files', 6), postFoundPlant)
 
 usersRouter.get("/:user_id/plants", getPlantsByUserId)
 
