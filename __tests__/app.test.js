@@ -766,7 +766,7 @@ describe("/api/users/:user_id/found_plants", () => {
         })
     })
     describe.skip("POST", () => {
-        ///////// These must be tested seperately because of the exiftool not shutting down properly /////////
+        ///////// These must be tested seperately because of the exiftool not shutting down properly between tests /////////
         test("201: Responds with a 201 status code and the found plant object when the client sends only the required fields", () => {
             return request(app)
             .post("/api/users/3/found_plants")
@@ -784,6 +784,17 @@ describe("/api/users/:user_id/found_plants", () => {
             .attach("photo_files", path.join(__dirname, "../db/data/images/20250120_145805.jpg"))
             .expect(201)
         })
+        test("201: Responds with a 201 status code and the found plant object when the client sends several photos", () => {
+            return request(app)
+            .post("/api/users/3/found_plants")
+            .field("plant_id", 3)
+            .field("location_name", "Place Fifteen")
+            .attach("photo_files", path.join(__dirname, "../db/data/images/IMG_2230.HEIC"))
+            .attach("photo_files", path.join(__dirname, "../db/data/images/20250116_121857.jpg"))
+            .attach("photo_files", path.join(__dirname, "../db/data/images/20250120_145805.jpg"))
+            .expect(201)
+        }, 30000)
+        
         test("400: Responds with a 400 status code and 'Bad Request' if the user_id is not a number", () => {
             return request(app)
             .post("/api/users/not-a-number/found_plants")
@@ -795,7 +806,7 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body).toEqual({ message: "Bad Request" })
             })
         })
-        test("400: Responds with a 404 status code and 'Not Found' if the user_id does not exist", () => {
+        test("404: Responds with a 404 status code and 'Not Found' if the user_id does not exist", () => {
             return request(app)
             .post("/api/users/999/found_plants")
             .field("plant_id", 3)
@@ -806,13 +817,16 @@ describe("/api/users/:user_id/found_plants", () => {
                 expect(body).toEqual({ message: "Not Found" })
             })
         })
-        test("201: Responds with a 201 status code when the client sends a photo with the find", () => {
+        test("404: Responds with a 404 status code and 'Not Found' if the plant_id does not exist", () => {
             return request(app)
-            .post("/api/users/4/found_plants")
-            .field("plant_id", 3)
+            .post("/api/users/999/found_plants")
+            .field("plant_id", 999)
             .field("location_name", "Place Fifteen")
-            .attach("photo_files", path.join(__dirname, "../db/data/images/IMG_2233.HEIC"))
-            .expect(201)
+            .attach("photo_files", path.join(__dirname, "../db/data/images/IMG_2232.HEIC"))
+            .expect(404)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: "Not Found" })
+            })
         })
     })
 })
