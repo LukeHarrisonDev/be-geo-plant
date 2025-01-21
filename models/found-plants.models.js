@@ -120,48 +120,70 @@ function fetchFoundPlantsByUserId(userId, sortBy = "created_at", orderBy = "desc
     })
 }
 
-function addFoundPlant(userId, newFoundPlant, newPhoto) {
-        
-    const newPhotoPath = newPhoto[0].path
+function addFoundPlant(userId, newFoundPlant, newPhotos) {
 
-    return exiftool.read(newPhotoPath)
-    .then((metaData) => {
-        const location = {lat: metaData.GPSLatitude, lon: metaData.GPSLongitude}
-        const photoDate = metaData.GPSDateTime.rawValue
-        const formattedDate = `${photoDate.slice(0, 4)}-${photoDate.slice(5, 7)}-${photoDate.slice(8, 10)}T${photoDate.slice(11, 22)}0Z`
-
-        exiftool.end()
-
-        newFoundPlant.location = location
-        newFoundPlant.created_at = formattedDate
-
-            return cloudinary.uploader.upload(newPhotoPath)
-
+    const newPhotosPaths = newPhotos.map((photo) => {
+        return photo.path
     })
-    .then((photoCloudData) => {
-        
-        const cloudName = photoCloudData.display_name
-        newFoundPlant.photo_cloud_names = [`${cloudName}`]
 
-        fs.unlink(newPhotoPath)
-
-        const columns = Object.keys(newFoundPlant)
-        const values = Object.values(newFoundPlant)
-        columns.unshift("found_by")
-        values.unshift(+userId)
-        
-        const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
-
-        let sqlQuery = `INSERT INTO found_plants (${columns})
-        VALUES (${placeholders})
-        RETURNING *`
-        return db.query(sqlQuery, values)
-    })
-    .then(({ rows }) => {
-        if (rows.length === 0) {
+    return checkIfExists("plants", "plant_id", newFoundPlant.plant_id)
+    .then((result) => {
+        if(!result) {
+            newPhotosPaths.forEach((path) => {
+                fs.unlink(path)
+            })
             return Promise.reject({ status: 404, message: "Not Found" })
         }
-        return rows[0]
+        const metaDataPromises = []
+        newPhotosPaths.forEach((path) => {
+            metaDataPromises.push(exiftool.read(path))
+        })
+        return Promise.all(metaDataPromises)
+        .then((metaData) => {
+            const location = {lat: metaData[0].GPSLatitude, lon: metaData[0].GPSLongitude}
+            const photoDate = metaData[0].GPSDateTime.rawValue
+            const formattedDate = `${photoDate.slice(0, 4)}-${photoDate.slice(5, 7)}-${photoDate.slice(8, 10)}T${photoDate.slice(11, 22)}0Z`
+            
+            exiftool.end()
+            
+            newFoundPlant.location = location
+            newFoundPlant.created_at = formattedDate
+
+            const uploadPromises = []
+            newPhotosPaths.forEach((path) => {
+                uploadPromises.push(cloudinary.uploader.upload(path))
+            })
+            return Promise.all(uploadPromises)
+        })  
+        .then((photoCloudData) => {
+            newFoundPlant.photo_cloud_names = []
+            photoCloudData.forEach((photo) => {
+                newFoundPlant.photo_cloud_names.push(photo.display_name)
+            })
+            
+            newPhotosPaths.forEach((path) => {
+                fs.unlink(path)
+            })
+            
+            const columns = Object.keys(newFoundPlant)
+            const values = Object.values(newFoundPlant)
+
+            columns.unshift("found_by")
+            values.unshift(+userId)
+            
+            const placeholders = values.map((hello, index) => `$${index + 1}`).join(",")
+
+            let sqlQuery = `INSERT INTO found_plants (${columns})
+            VALUES (${placeholders})
+            RETURNING *`
+            return db.query(sqlQuery, values)
+        })
+        .then(({ rows }) => {
+            if (rows.length === 0) {
+                return Promise.reject({ status: 404, message: "Not Found" })
+            }
+            return rows[0]
+        })
     })
 }
 
