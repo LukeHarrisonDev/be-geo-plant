@@ -385,7 +385,7 @@ describe("/api/found_plants/:find_id", () => {
                     found_by: 2,
                     location_name: 'Place Seven',
                     location: {lat: 51.97567141748108, lon: -2.1932002831539124},
-                    photo_url: "https://images.unsplash.com/photo-1538998073820-4dfa76300194?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    photo_url: "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/IMG_2277_k4eqid?_a=BAMCkGLR0",
                     comment: "Found, what a lovely plant!",
                     created_at: expect.any(String)
                 })
