@@ -90,7 +90,7 @@
     "POST /api/users/:user_id/found_plants": {
         "description": "Adds a new Found Plant and serves that Found Plant",
         "queries": [],
-        "additionaPropertiesRequired": [
+        "additionalPropertiesRequired": [
             "plant_id(Number)", "place_name(String)", "photo_files(Between 1 - 6 Image Files)"
         ],
         "optionProperties": [
