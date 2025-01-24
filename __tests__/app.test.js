@@ -355,7 +355,6 @@ describe("/api/found_plants", () => {
                         find_id: expect.any(Number),
                         plant_id: expect.any(Number),
                         found_by: expect.any(Number),
-                        photo_url: expect.any(String),
                         location_name: expect.any(String),
                         comment: expect.any(String),
                         created_at: expect.any(String),
@@ -365,6 +364,7 @@ describe("/api/found_plants", () => {
                         })
                     })
                     expect(Array.isArray(foundPlant.photo_cloud_names)).toBe(true)
+                    expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
                 })
             })
         })
@@ -385,10 +385,12 @@ describe("/api/found_plants/:find_id", () => {
                     found_by: 2,
                     location_name: 'Place Seven',
                     location: {lat: 51.97567141748108, lon: -2.1932002831539124},
-                    photo_url: "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/IMG_2277_k4eqid?_a=BAMCkGLR0",
+                    photo_urls: ["https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/IMG_2279_vuuvmr?_a=BAMCkGLR0", "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/IMG_2277_k4eqid?_a=BAMCkGLR0", "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/IMG_2274_wwdpgn?_a=BAMCkGLR0"],
                     comment: "Found, what a lovely plant!",
                     created_at: expect.any(String)
                 })
+                expect(Array.isArray(body.foundPlant.photo_urls)).toBe(true)
+
             })
         })
         test("400: Responds with a 400 status code and 'Bad Request' if the find_id is not a number", () => {
@@ -447,7 +449,6 @@ describe("/api/users/:user_id/found_plants", () => {
                         plant_id: expect.any(Number),
                         plant_name: expect.any(String),
                         found_by: 2,
-                        photo_url: expect.any(String),
                         location_name: expect.any(String),
                         comment: expect.any(String),
                         created_at: expect.any(String),
@@ -456,6 +457,7 @@ describe("/api/users/:user_id/found_plants", () => {
                             lon: expect.any(Number),
                         })
                     })
+                    expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
                 })
             })
         })
@@ -642,7 +644,6 @@ describe("/api/users/:user_id/found_plants", () => {
                             plant_id: 4,
                             plant_name: "Plant Four",
                             found_by: 3,
-                            photo_url: expect.any(String),
                             location_name: expect.any(String),
                             comment: expect.any(String),
                             created_at: expect.any(String),
@@ -651,6 +652,7 @@ describe("/api/users/:user_id/found_plants", () => {
                                 lon: expect.any(Number),
                             })
                         })
+                        expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
                     })
                 })
             })
@@ -687,7 +689,6 @@ describe("/api/users/:user_id/found_plants", () => {
                             plant_id: expect.any(Number),
                             plant_name: expect.any(String),
                             found_by: 3,
-                            photo_url: expect.any(String),
                             location_name: expect.any(String),
                             comment: expect.any(String),
                             created_at: expect.any(String),
@@ -696,6 +697,7 @@ describe("/api/users/:user_id/found_plants", () => {
                                 lon: expect.any(Number),
                             })
                         })
+                        expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
                     })
                 })
             })
@@ -712,7 +714,6 @@ describe("/api/users/:user_id/found_plants", () => {
                             plant_id: expect.any(Number),
                             plant_name: expect.any(String),
                             found_by: 3,
-                            photo_url: expect.any(String),
                             location_name: expect.any(String),
                             comment: expect.any(String),
                             created_at: expect.any(String),
@@ -721,6 +722,7 @@ describe("/api/users/:user_id/found_plants", () => {
                                 lon: expect.any(Number),
                             })
                         })
+                        expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
                     })
                 })
             })
@@ -751,7 +753,6 @@ describe("/api/users/:user_id/found_plants", () => {
                             plant_id: expect.any(Number),
                             plant_name: expect.any(String),
                             found_by: 3,
-                            photo_url: expect.any(String),
                             location_name: expect.any(String),
                             comment: expect.any(String),
                             created_at: expect.any(String),
@@ -760,6 +761,7 @@ describe("/api/users/:user_id/found_plants", () => {
                                 lon: expect.any(Number),
                             })
                         })
+                        expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
                     })
                 })
             })

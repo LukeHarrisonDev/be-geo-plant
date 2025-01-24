@@ -1,5 +1,6 @@
 node_modules
 .env.*
+.env
 notes
 db/data/images/
 db/data/uploads/*

@@ -42,7 +42,7 @@ function seed ({userData, plantData, foundPlantsData}) {
             find_id SERIAL PRIMARY KEY,
             plant_id INT NOT NULL REFERENCES plants(plant_id),
             found_by INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-            photo_url VARCHAR DEFAULT 'https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg',
+            photo_urls TEXT[],
             location_name VARCHAR (50) NOT NULL,
             location JSONB NOT NULL,
             comment VARCHAR (300) DEFAULT 'Found, what a lovely plant!',
@@ -91,14 +91,14 @@ function seed ({userData, plantData, foundPlantsData}) {
             const formattedFoundPlants = foundPlantsData.map(convertTimestampToDate)
             const insertFoundPlantsData = format(
                 `INSERT INTO found_plants (plant_id,
-                found_by, location_name, location, photo_url, comment, created_at, photo_cloud_names) VALUES %L;`,
-                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_url, comment, created_at, photo_cloud_names }) => {
+                found_by, location_name, location, photo_urls, comment, created_at, photo_cloud_names) VALUES %L;`,
+                formattedFoundPlants.map(({ plant_id, found_by, location_name, location, photo_urls, comment, created_at, photo_cloud_names }) => {
                     return [
                         plant_id,
                         found_by,
                         location_name,
                         JSON.stringify(location),
-                        photo_url || "https://static.vecteezy.com/system/resources/previews/006/719/370/original/plant-pot-cartoon-free-vector.jpg",
+                        `{${photo_urls}}`,
                         comment || 'Found, what a lovely plant!',
                         created_at || new Date(),
                         `{${photo_cloud_names}}`
