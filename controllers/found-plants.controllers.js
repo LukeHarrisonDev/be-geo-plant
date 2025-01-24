@@ -40,13 +40,11 @@ function postFoundPlant(request, response, next) {
     const { user_id } = request.params
     const newFoundPlant = request.body
     const newPhotos = request.files
-    // console.log(newPhotos, "<<< New photos")
     addFoundPlant(user_id, newFoundPlant, newPhotos)
     .then((foundPlant) => {
         response.status(201).send({ foundPlant })
     })
     .catch((error) => {
-        console.log(error, "<<<< Error")
         next(error)
     })
 }
