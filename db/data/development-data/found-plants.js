@@ -63,7 +63,7 @@ module.exports = [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/outdoor-woman?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/man-on-a-escalator?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/man-portrait?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/outdoor-woman",
@@ -414,7 +414,7 @@ module.exports = [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/jazz?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/pot-mussels?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/car-interior-design",
@@ -686,7 +686,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/boy-snow-hoodie?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/chair?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/smiling-man?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/breakfast?_a=BAMCkGLR0",
       ],
@@ -774,7 +774,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/analog-classic?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/balloons?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/shoe?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/leather-bag-gray?_a=BAMCkGLR0",
@@ -1259,7 +1259,7 @@ module.exports = [
       location_name: "Exmoor",
       location: { lat: 51.208, lon: -3.643 },
       photo_urls: [
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: ["woman-on-a-football-field"],
   },
@@ -1766,7 +1766,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/breakfast?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/upscale-face-1?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/two-ladies?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
@@ -1963,7 +1963,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/cld-sample-2?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/sample?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/dessert-on-a-plate?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
@@ -2078,7 +2078,7 @@ module.exports = [
       location: { lat: 51.531, lon: -0.05 },
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/beach-boat?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/bike?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
@@ -2152,7 +2152,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/nature-mountains?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/bicycle?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/cld-sample-2?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/nature-mountains?_a=BAMCkGLR0",
       ],
@@ -2293,7 +2293,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/outdoor-woman?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/chair-and-coffee-table?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/outdoor-woman",
@@ -2591,7 +2591,7 @@ module.exports = [
       location_name: "Blaise Castle Estate",
       location: { lat: 51.485, lon: -2.612 },
       photo_urls: [
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/cat?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/pot-mussels?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/kitchen-bar?_a=BAMCkGLR0",
@@ -2651,7 +2651,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/nature-mountains?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/accessories-bag?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/chair-and-coffee-table?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/cld-sample-2?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
@@ -2728,7 +2728,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/smiling-man?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/man-portrait?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/smiling-man",
@@ -3002,9 +3002,9 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/girl-urban-view?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/leather-bag-gray?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/smiling-man?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/girl-urban-view",
@@ -3542,7 +3542,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/look-up?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/leather-bag-gray?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/kitchen-bar?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/girl-urban-view?_a=BAMCkGLR0",
       ],
@@ -3816,7 +3816,7 @@ module.exports = [
       location: { lat: 50.922, lon: -0.992 },
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/sample?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: ["sample", "woman-on-a-football-field"],
   },
@@ -4021,7 +4021,7 @@ module.exports = [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/three-dogs?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/kitchen-bar?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/landscape-panorama?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/three-dogs",
@@ -4083,7 +4083,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/pot-mussels?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/boy-snow-hoodie?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/cup-on-a-table?_a=BAMCkGLR0",
       ],
@@ -4382,8 +4382,8 @@ module.exports = [
       location: { lat: 53.973, lon: -1.836 },
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/boy-snow-hoodie?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/nature-mountains?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/man-portrait?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/two-ladies?_a=BAMCkGLR0",
@@ -4475,9 +4475,9 @@ module.exports = [
       location: { lat: 57, lon: -5 },
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/chair?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/kitchen-bar?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/landscape-panorama?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/coffee?_a=BAMCkGLR0",
       ],
@@ -4512,7 +4512,7 @@ module.exports = [
       location: { lat: 51.287, lon: -2.742 },
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/man-portrait?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/cloudinary-group?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/sample?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/cup-on-a-table?_a=BAMCkGLR0",
@@ -4548,7 +4548,7 @@ module.exports = [
       location_name: "Hampstead Heath Extension",
       location: { lat: 51.559, lon: -0.17 },
       photo_urls: [
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/leather-bag-gray?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/landscape-panorama?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/girl-urban-view?_a=BAMCkGLR0",
@@ -4690,9 +4690,9 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/nature-mountains?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/leather-bag-gray?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/spices?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/dessert-on-a-plate?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
@@ -4784,7 +4784,7 @@ module.exports = [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/architecture-signs?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/kitchen-bar?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/beach-boat?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/chair-and-coffee-table?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/outdoor-woman?_a=BAMCkGLR0",
       ],
@@ -4977,7 +4977,7 @@ module.exports = [
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/sheep?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/cld-sample-2?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
           "samples/sheep",
@@ -5363,7 +5363,7 @@ module.exports = [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/man-portrait?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/architecture-signs?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/bicycle?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/architecture-signs?_a=BAMCkGLR0",
       ],
       photo_cloud_names: [
@@ -5465,7 +5465,7 @@ module.exports = [
       location: { lat: 51.12, lon: -0.78 },
       photo_urls: [
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/cld-sample-4?_a=BAMCkGLR0",
-          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/woman-on-a-football-field?_a=BAMCkGLR0",
+          "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/woman-on-a-football-field?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/dessert?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/accessories-bag?_a=BAMCkGLR0",
           "https://res.cloudinary.com/dcm85bncm/image/upload/f_auto/q_auto/w_1000/samples/shoes?_a=BAMCkGLR0",
