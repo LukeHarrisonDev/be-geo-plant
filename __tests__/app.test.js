@@ -52,6 +52,7 @@ describe("/api/users", () => {
                 body.users.forEach((user) => {
                     expect(user).toMatchObject({
                         user_id: expect.any(Number),
+                        auth_uuid: expect.any(String),
                         username: expect.any(String),
                         first_name: expect.any(String),
                         last_name: expect.any(String),
@@ -151,13 +152,14 @@ describe("/api/users", () => {
 
 describe("/api/users/:user_id", () => {
     describe("GET", () => {
-        test("200: Responds with a 200 status code and a single user object", () => {
+        test.only("200: Responds with a 200 status code and a single user object", () => {
             return request(app)
             .get("/api/users/2")
             .expect(200)
             .then(({body}) => {
                 expect(body.user).toMatchObject({
                     user_id: 2,
+                    auth_uuid: expect.any(String),
                     username: "UserName£$_2",
                     first_name: "Firsttwo",
                     last_name: "Lasttwo",

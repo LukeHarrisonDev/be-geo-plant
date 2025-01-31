@@ -15,6 +15,7 @@ function seed ({userData, plantData, foundPlantsData}) {
         const usersTablePromise =  db.query(
             `CREATE TABLE users (
             user_id SERIAL PRIMARY KEY,
+            auth_uuid UUID DEFAULT gen_random_uuid(),
             username VARCHAR UNIQUE NOT NULL,
             first_name VARCHAR (30) NOT NULL,
             last_name VARCHAR (30) NOT NULL,
