@@ -5,17 +5,19 @@
   "main": "listen.js",
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
-    "seed": "node ./db/seeds/run-seed.js",
-    "dev": "node listen.js",
     "test": "jest --runInBand",
     "prepare": "husky",
     "start": "node listen.js",
-    "seed-prod": "NODE_ENV=production npm run seed"
+    "seed": "node ./db/seeds/run-seed.js",
+    "seed-prod": "NODE_ENV=production npm run seed",
+    "auth-test": "NODE_ENV=test node ./db/seeds/run-auth-seed-test.js",
+    "auth-prod": "NODE_ENV=production node ./db/seeds/run-auth-seed-dev.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
     "cloudinary": "^2.5.1",
     "dotenv": "^16.4.5",
     "exiftool-vendored": "^29.0.0",

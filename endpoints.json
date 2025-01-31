@@ -12,6 +12,7 @@
             [
                 {
                     "user_id":1,
+                    "auth_uuid": "16287e8d-03de-4ecf-9082-42429ceb83a0",
                     "username":"UserName£$_1",
                     "first_name":"Firstone",
                     "last_name":"Lastone",
@@ -32,6 +33,7 @@
             "user":
             {
                 "user_id":5,
+                "auth_uuid": "16287e8d-03de-4ecf-9082-42429ceb83a0",
                 "username":"TestUser*%$_1",
                 "first_name":"Testfirst",
                 "last_name":"Test Last",
@@ -50,6 +52,7 @@
             "user":
             {
                 "user_id":1,
+                "auth_uuid": "16287e8d-03de-4ecf-9082-42429ceb83a0",
                 "username":"UserName£$_1",
                 "first_name":"Firstone",
                 "last_name":"Lastone",
