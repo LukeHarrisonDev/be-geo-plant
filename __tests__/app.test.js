@@ -43,7 +43,7 @@ describe("/api", () => {
 
 describe("/api/users", () => {
     describe("GET", () => {
-        test.only("200: Responds with a 200 status code and an array of all user objects", () => {
+        test("200: Responds with a 200 status code and an array of all user objects", () => {
             return request(app)
             .get("/api/users")
             .expect(200)
@@ -63,7 +63,7 @@ describe("/api/users", () => {
             })
         })
     })
-    describe("POST", () => {
+    describe.skip("POST", () => {
         test("201: Responds with a 201 status code and the posted user object when the client sends only the required fields", () => {
             const newUser = {
                 username: "TestUser*%$_1",

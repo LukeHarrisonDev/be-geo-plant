@@ -67,8 +67,6 @@ function seed ({userData, plantData, foundPlantsData}) {
             })
         )
         const usersPromise = db.query(insertUsersData)
-        console.log(insertUsersData, "<<< IUD")
-        // console.log(userData[1], "<<< 1")
 
         const insertPlantsData = format(
             `INSERT INTO plants (
