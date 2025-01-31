@@ -1,10 +1,6 @@
-const { createClient } = require('@supabase/supabase-js')
-
 const format = require('pg-format')
 const db = require("../connection")
 const { convertTimestampToDate } = require('./utils')
-
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
 
 function seed ({userData, plantData, foundPlantsData}) {
     return db.query(`DROP TABLE IF EXISTS found_plants;`)
@@ -15,7 +11,6 @@ function seed ({userData, plantData, foundPlantsData}) {
         return db.query(`DROP TABLE IF EXISTS users;`)
     })
     .then(() => {
-
         const usersTablePromise =  db.query(
             `CREATE TABLE users (
             user_id SERIAL PRIMARY KEY,
@@ -24,7 +19,6 @@ function seed ({userData, plantData, foundPlantsData}) {
             first_name VARCHAR (30) NOT NULL,
             last_name VARCHAR (30) NOT NULL,
             email VARCHAR (60) UNIQUE NOT NULL,
-            password VARCHAR (30) NOT NULL,
             image_url VARCHAR DEFAULT 'https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             admin BOOLEAN DEFAULT 'false'
             );`
@@ -59,21 +53,22 @@ function seed ({userData, plantData, foundPlantsData}) {
     .then(() => {
         const insertUsersData = format(
             `INSERT INTO users (
-            username, first_name, last_name, email, password, image_url, admin
+            username, first_name, last_name, email, image_url, admin
             ) VALUES %L;`,
-            userData.map(({ username, first_name, last_name, email, password, image_url, admin }) => {
+            userData.map(({ username, first_name, last_name, email, image_url, admin }) => {
                 return [
                     username,
                     first_name,
                     last_name,
                     email,
-                    password,
                     image_url || 'https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                     admin || false
                 ]
             })
         )
         const usersPromise = db.query(insertUsersData)
+        console.log(insertUsersData, "<<< IUD")
+        // console.log(userData[1], "<<< 1")
 
         const insertPlantsData = format(
             `INSERT INTO plants (

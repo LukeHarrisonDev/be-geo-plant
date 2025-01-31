@@ -6,6 +6,7 @@
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "node ./db/seeds/run-seed.js",
+    "auth-seed": "node ./db/seeds/run-auth-seed.js",
     "dev": "node listen.js",
     "test": "jest --runInBand",
     "prepare": "husky",
