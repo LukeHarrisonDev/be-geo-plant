@@ -1,6 +1,10 @@
+const { createClient } = require('@supabase/supabase-js')
+
 const format = require('pg-format')
 const db = require("../connection")
 const { convertTimestampToDate } = require('./utils')
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
 
 function seed ({userData, plantData, foundPlantsData}) {
     return db.query(`DROP TABLE IF EXISTS found_plants;`)

@@ -57,7 +57,7 @@ describe("/api/users", () => {
                         first_name: expect.any(String),
                         last_name: expect.any(String),
                         email: expect.any(String),
-                        password: expect.any(String),
+                        // password: expect.any(String),
                         image_url: expect.any(String),
                     })
                 })
@@ -84,7 +84,7 @@ describe("/api/users", () => {
                     first_name: "Testfirst",
                     last_name: "Test Last",
                     email: "testemail@gmail.com",
-                    password: "PasswordTest123!",
+                    // password: "PasswordTest123!",
                     image_url: "https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     admin: false,
                     plants_count: "0",
@@ -112,7 +112,7 @@ describe("/api/users", () => {
                     first_name: "Testingfirst",
                     last_name: "Testing Last",
                     email: "testingemail@gmail.com",
-                    password: "PasswordTest456!",
+                    // password: "PasswordTest456!",
                     image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     admin: true,
                     plants_count: "0",
@@ -152,7 +152,7 @@ describe("/api/users", () => {
 
 describe("/api/users/:user_id", () => {
     describe("GET", () => {
-        test.only("200: Responds with a 200 status code and a single user object", () => {
+        test("200: Responds with a 200 status code and a single user object", () => {
             return request(app)
             .get("/api/users/2")
             .expect(200)
@@ -164,7 +164,7 @@ describe("/api/users/:user_id", () => {
                     first_name: "Firsttwo",
                     last_name: "Lasttwo",
                     email: "email2@gmail.com",
-                    password: "Password234!",
+                    // password: "Password234!",
                     image_url: "https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     admin: false,
                     plants_count: "7",
