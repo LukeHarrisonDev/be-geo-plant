@@ -1,5 +1,8 @@
 const { use } = require("../app")
+const { createClient } = require('@supabase/supabase-js')
 const db = require("../db/connection")
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
 
 function fetchUsers() {
     let sqlQuery = `SELECT * FROM users`
@@ -10,12 +13,25 @@ function fetchUsers() {
 }
 
 function addUser(newUser) {
-    const columns = Object.keys(newUser)
-    const values = Object.values(newUser)
-    
-    if (columns.length === 0) {
+
+    const newUserLength = Object.keys(newUser).length
+
+    if (newUserLength === 0) {
         return Promise.reject({ status: 400, message: "Bad Request" })
     }
+
+    return supabase.auth.signUp({
+        email: newUser.email,
+        password: newUser.password,
+    }).then(({data, error}) => {
+        if(error) {
+            return Promise.reject({ status: 400, message: "Bad Request" })
+        }
+        newUser.auth_uuid = data.user.id
+        delete newUser.password
+
+        const columns = Object.keys(newUser)
+        const values = Object.values(newUser)
 
     const placeholders = values.map((_, index) => `$${index + 1}`).join(",")
 
@@ -24,6 +40,7 @@ function addUser(newUser) {
     RETURNING *`
     
     return db.query(sqlQuery, values)
+    })
     .then(({ rows }) => {
         rows[0].plants_count = "0"
         return rows[0]
