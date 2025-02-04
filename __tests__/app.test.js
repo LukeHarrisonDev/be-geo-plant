@@ -106,6 +106,7 @@ describe("/api/users", () => {
             .then(({body}) => {
                 expect(body.user).toMatchObject({
                     user_id: 5,
+                    auth_uuid: expect.any(String),
                     username: "TestUser*%$_2",
                     first_name: "Testingfirst",
                     last_name: "Testing Last",
@@ -126,7 +127,7 @@ describe("/api/users", () => {
                 expect(body).toEqual({ message: "Bad Request" })
             })
         })
-        test("400: Responds with 'Bad Request' if the new user has all valid fileds but the datatype is invalid", () => {
+        test("400: Responds with 'Bad Request' if the new user has all valid fields but the datatype is invalid", () => {
             const newUser = {
                 username: "TestUser*%$_2",
                 first_name: "Testingfirst",
@@ -141,7 +142,23 @@ describe("/api/users", () => {
             .send(newUser)
             .expect(400)
             .then(({ body }) => {
-                expect(body).toEqual({ message: "Bad Request" })
+                expect(body).toEqual({ message: '"admin" must be a boolean' })
+            })
+        })
+        test("400: Responds with 'Bad Request' if the new users username isn't the correct length", () => {
+            const newUser = {
+                username: "Test",
+                first_name: "Testfirst",
+                last_name: "Test Last",
+                email: "testemail4@e-record.com",
+                password: "PasswordTest444!",
+            }
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: '"username" length must be at least 6 characters long' })
             })
         })
     })
@@ -153,7 +170,7 @@ describe("/api/users/:user_id", () => {
             return request(app)
             .get("/api/users/2")
             .expect(200)
-            .then(({body}) => {
+            .then(({ body }) => {
                 expect(body.user).toMatchObject({
                     user_id: 2,
                     auth_uuid: expect.any(String),

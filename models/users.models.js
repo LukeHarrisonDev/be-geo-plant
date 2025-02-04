@@ -1,4 +1,5 @@
 const { use } = require("../app")
+const { validateUser } = require("../db/seeds/utils")
 const { createClient } = require('@supabase/supabase-js')
 const db = require("../db/connection")
 
@@ -20,12 +21,19 @@ function addUser(newUser) {
         return Promise.reject({ status: 400, message: "Bad Request" })
     }
 
-    return supabase.auth.signUp({
-        email: newUser.email,
-        password: newUser.password,
-    }).then(({data, error}) => {
+    return validateUser(newUser)
+    .then((result) => {
+        return result
+    })
+    .then(() => {
+        return supabase.auth.signUp({
+            email: newUser.email,
+            password: newUser.password,
+        })
+    })
+    .then(({data, error}) => {
         if(error) {
-            return Promise.reject({ status: 400, message: "Bad Request" })
+            console.log(error, "<<< Supabase Error")
         }
         newUser.auth_uuid = data.user.id
         delete newUser.password
