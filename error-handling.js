@@ -16,6 +16,13 @@ function notFoundError(error, request, response, next) {
     next(error)
 }
 
+function validationError(error, request, response, next) {
+    if(error.details) {
+        response.status(400).send({ message: error.details[0].message })
+    }
+    next(error)
+}
+
 function customError(error, request, response, next) {
     if (error.status && error.message) {
         response.status(error.status).send({ message: error.message })
@@ -23,4 +30,4 @@ function customError(error, request, response, next) {
     next(error)
 }
 
-module.exports = { catchInvalidEndpoints, notFoundError, badRequest, customError }
+module.exports = { catchInvalidEndpoints, notFoundError, badRequest, validationError, customError }

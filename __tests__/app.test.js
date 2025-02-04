@@ -63,13 +63,13 @@ describe("/api/users", () => {
             })
         })
     })
-    describe.skip("POST", () => {
+    describe("POST", () => {
         test("201: Responds with a 201 status code and the posted user object when the client sends only the required fields", () => {
             const newUser = {
                 username: "TestUser*%$_1",
                 first_name: "Testfirst",
                 last_name: "Test Last",
-                email: "testemail@e-record.com",
+                email: "testemail1@e-record.com",
                 password: "PasswordTest123!",
             }
             return request(app)
@@ -82,7 +82,7 @@ describe("/api/users", () => {
                     username: "TestUser*%$_1",
                     first_name: "Testfirst",
                     last_name: "Test Last",
-                    email: "testemail@e-record.com",
+                    email: "testemail1@e-record.com",
                     image_url: "https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     admin: false,
                     plants_count: "0",
@@ -106,6 +106,7 @@ describe("/api/users", () => {
             .then(({body}) => {
                 expect(body.user).toMatchObject({
                     user_id: 5,
+                    auth_uuid: expect.any(String),
                     username: "TestUser*%$_2",
                     first_name: "Testingfirst",
                     last_name: "Testing Last",
@@ -126,13 +127,13 @@ describe("/api/users", () => {
                 expect(body).toEqual({ message: "Bad Request" })
             })
         })
-        test("400: Responds with 'Bad Request' if the new user has all valid fileds but the datatype is invalid", () => {
+        test("400: Responds with 'Bad Request' if the new user has all valid fields but the datatype is invalid", () => {
             const newUser = {
                 username: "TestUser*%$_2",
                 first_name: "Testingfirst",
                 last_name: "Testing Last",
                 email: "testemail3@e-record.com",
-                password: "PasswordTest456!",
+                password: "PasswordTest789!",
                 image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 admin: 5,
             }
@@ -141,7 +142,23 @@ describe("/api/users", () => {
             .send(newUser)
             .expect(400)
             .then(({ body }) => {
-                expect(body).toEqual({ message: "Bad Request" })
+                expect(body).toEqual({ message: '"admin" must be a boolean' })
+            })
+        })
+        test("400: Responds with 'Bad Request' if the new users username isn't the correct length", () => {
+            const newUser = {
+                username: "Test",
+                first_name: "Testfirst",
+                last_name: "Test Last",
+                email: "testemail4@e-record.com",
+                password: "PasswordTest444!",
+            }
+            return request(app)
+            .post("/api/users")
+            .send(newUser)
+            .expect(400)
+            .then(({ body }) => {
+                expect(body).toEqual({ message: '"username" length must be at least 6 characters long' })
             })
         })
     })
@@ -153,7 +170,7 @@ describe("/api/users/:user_id", () => {
             return request(app)
             .get("/api/users/2")
             .expect(200)
-            .then(({body}) => {
+            .then(({ body }) => {
                 expect(body.user).toMatchObject({
                     user_id: 2,
                     auth_uuid: expect.any(String),
