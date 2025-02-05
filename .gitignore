@@ -4,3 +4,4 @@ node_modules
 notes
 db/data/images/
 db/data/uploads/*
+db/seeds/*.txt
