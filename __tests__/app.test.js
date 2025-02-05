@@ -3,10 +3,15 @@ const seed = require("../db/seeds/seed")
 const data = require("../db/data/test-data")
 const db = require("../db/connection")
 const endpoints = require("../endpoints.json")
-const path = require('path');
-
+const path = require('path')
 const request = require("supertest")
+const fs = require('fs')
+const cleanup = require("../db/seeds/auth-tests-cleanup")
 
+beforeAll(() => {
+    return cleanup()
+    console.log(result)
+})
 beforeEach(() => seed(data))
 afterAll(() => db.end())
 
@@ -79,6 +84,7 @@ describe("/api/users", () => {
             .then(({body}) => {
                 expect(body.user).toMatchObject({
                     user_id: 5,
+                    auth_uuid: expect.any(String),
                     username: "TestUser*%$_1",
                     first_name: "Testfirst",
                     last_name: "Test Last",
@@ -86,6 +92,9 @@ describe("/api/users", () => {
                     image_url: "https://images.unsplash.com/photo-1628891435222-065925dcb365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     admin: false,
                     plants_count: "0",
+                })
+                fs.writeFile(`${__dirname}/../db/seeds/uuid1.txt`, body.user.auth_uuid, (error) => {
+                    if (error) throw error
                 })
             })
         })
@@ -114,6 +123,9 @@ describe("/api/users", () => {
                     image_url: "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     admin: true,
                     plants_count: "0",
+                })
+                fs.writeFile(`${__dirname}/../db/seeds/uuid2.txt`, body.user.auth_uuid, (error) => {
+                    if (error) throw error
                 })
             })
         })

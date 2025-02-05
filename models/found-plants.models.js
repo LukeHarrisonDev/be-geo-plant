@@ -3,8 +3,7 @@ const Distance = require("geo-distance")
 const db = require("../db/connection")
 const { checkIfExists } = require("../db/seeds/utils")
 const cloudinary = require("cloudinary").v2
-const fs = require('fs').promises;
-
+const fs = require('fs').promises
 require('dotenv').config()
 
 cloudinary.config({
