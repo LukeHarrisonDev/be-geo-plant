@@ -10,7 +10,6 @@ const cleanup = require("../db/seeds/auth-tests-cleanup")
 
 beforeAll(() => {
     return cleanup()
-    console.log(result)
 })
 beforeEach(() => seed(data))
 afterAll(() => db.end())
