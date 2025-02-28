@@ -85,7 +85,10 @@
                         "longitude":-2.0886439875108396
                     },
                     "comment":"Cupidatat exercitation deserunt proident laborum magna do fugiat sint dolor.",
-                    "created_at":"2024-10-02T15:24:28.383Z"
+                    "created_at":"2024-10-02T15:24:28.383Z",
+                    "photo_cloud_names":["sample"],
+                    "plant_name":"Plant Four",
+                    "season":["Autumn","Winter"]
                 }
             ]
         }

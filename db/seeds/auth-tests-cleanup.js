@@ -28,5 +28,4 @@ function cleanup() {
         })
 }
 
-cleanup()
 module.exports = cleanup
