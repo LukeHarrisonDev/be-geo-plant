@@ -484,6 +484,8 @@ describe("/api/users/:user_id/found_plants", () => {
                         })
                     })
                     expect(Array.isArray(foundPlant.photo_urls)).toBe(true)
+                    expect(Array.isArray(foundPlant.photo_cloud_names)).toBe(true)
+                    expect(Array.isArray(foundPlant.season)).toBe(true)
                 })
             })
         })
